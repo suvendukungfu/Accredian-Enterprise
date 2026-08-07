@@ -87,21 +87,25 @@ const jsonLd = {
   },
 };
 
+import { ThemeProvider } from "@/components/common/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased font-sans flex flex-col">
-        <AppProvider>{children}</AppProvider>
+      <body className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans flex flex-col transition-colors">
+        <ThemeProvider>
+          <AppProvider>{children}</AppProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 
 /**
  * Accredian Enterprise Main Platform Page
- * Next.js App Router Page Layout
+ * Next.js App Router Page Layout — Vercel / Linear Design Edition
  */
 import React, { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
@@ -22,6 +22,10 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { FAQs } from "@/components/home/FAQs";
 import { CTABanner } from "@/components/home/CTABanner";
 import { LeadFormModal } from "@/components/home/LeadFormModal";
+import { CommandPalette } from "@/components/common/CommandPalette";
+import { FloatingCTA } from "@/components/common/FloatingCTA";
+import { ReadingProgress } from "@/components/common/ReadingProgress";
+import { BackToTop } from "@/components/common/BackToTop";
 import { useApp } from "@/app/providers";
 import { ExecutiveProgram } from "@/types/program";
 
@@ -29,6 +33,7 @@ export default function Home() {
   const { isLeadModalOpen, openLeadModal, closeLeadModal, showToast } = useApp();
   const [selectedProgram, setSelectedProgram] = useState<ExecutiveProgram | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   const handleSelectProgram = (program: ExecutiveProgram) => {
     setSelectedProgram(program);
@@ -40,16 +45,25 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+      {/* Top Reading Scroll Progress Indicator */}
+      <ReadingProgress />
+
       {/* Sticky Header Navigation */}
-      <Navbar onOpenEnquireModal={() => openLeadModal()} />
+      <Navbar
+        onOpenEnquireModal={() => openLeadModal()}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+      />
 
       {/* Main Content Sections */}
       <main className="grow">
-        {/* Hero Section */}
-        <Hero onOpenEnquireModal={() => openLeadModal()} />
+        {/* Hero Section with 3D Canvas */}
+        <Hero
+          onOpenEnquireModal={() => openLeadModal()}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        />
 
-        {/* Client Logos / Partnerships */}
+        {/* Client Logos / Continuous 60fps Marquee */}
         <TrustedCompanies />
 
         {/* Track Record Stats */}
@@ -91,6 +105,22 @@ export default function Home() {
 
       {/* Enterprise Footer */}
       <Footer />
+
+      {/* Floating CTA Capsule */}
+      <FloatingCTA
+        onOpenEnquireModal={() => openLeadModal()}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+      />
+
+      {/* Smooth Back to Top Scroll Button */}
+      <BackToTop />
+
+      {/* Command Palette Spotlight Search Modal (⌘K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onOpenEnquireModal={(options) => openLeadModal(options)}
+      />
 
       {/* Program Syllabus Slide-Over Drawer */}
       <ProgramDrawer
