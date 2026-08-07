@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useId } from "react";
-import { motion } from "framer-motion";
 import {
   Calculator,
   TrendingUp,
@@ -14,7 +13,6 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/common/SectionHeading";
-import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
 interface ROICalculatorProps {
