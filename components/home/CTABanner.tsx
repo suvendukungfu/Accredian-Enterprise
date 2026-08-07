@@ -19,7 +19,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({ onOpenEnquireModal }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-3xl bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 p-8 sm:p-12 lg:p-16 text-white shadow-2xl overflow-hidden"
+          className="relative rounded-3xl bg-linear-to-r from-blue-700 via-blue-600 to-indigo-700 p-8 sm:p-12 lg:p-16 text-white shadow-2xl overflow-hidden"
         >
           {/* Background Ambient Orbs */}
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />

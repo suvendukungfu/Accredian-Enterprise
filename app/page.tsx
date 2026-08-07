@@ -25,7 +25,7 @@ export default function Home() {
       <Navbar onOpenEnquireModal={openLeadModal} />
 
       {/* Main Content Sections */}
-      <main className="flex-grow">
+      <main className="grow">
         {/* Hero Section */}
         <Hero onOpenEnquireModal={openLeadModal} />
 

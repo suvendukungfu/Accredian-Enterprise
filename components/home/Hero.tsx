@@ -15,11 +15,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
   return (
     <section id="hero" className="relative pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden bg-slate-50/50">
       {/* Background Decor Gradients */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-blue-100/50 via-indigo-50/30 to-transparent blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-linear-to-b from-blue-100/50 via-indigo-50/30 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-1/3 -right-32 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <Container>
-        <div className="relative rounded-3xl bg-gradient-to-br from-slate-100/90 via-blue-50/50 to-indigo-50/60 border border-slate-200/80 p-6 sm:p-10 lg:p-14 shadow-xl shadow-slate-200/50 overflow-hidden">
+        <div className="relative rounded-3xl bg-linear-to-br from-slate-100/90 via-blue-50/50 to-indigo-50/60 border border-slate-200/80 p-6 sm:p-10 lg:p-14 shadow-xl shadow-slate-200/50 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             
             {/* Left Content Column */}
@@ -35,12 +35,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]">
                 Next-Gen{" "}
-                <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
                   Expertise
                 </span>{" "}
                 <br />
                 For Your{" "}
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Enterprise
                 </span>
               </h1>
@@ -91,7 +91,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
               className="lg:col-span-5 relative flex items-center justify-center"
             >
               {/* Graphic Card Illustration */}
-              <div className="relative w-full aspect-[4/3] rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-700 to-blue-900 p-6 sm:p-8 text-white shadow-2xl flex flex-col justify-between overflow-hidden">
+              <div className="relative w-full aspect-4/3 rounded-2xl bg-linear-to-br from-blue-600 via-indigo-700 to-blue-900 p-6 sm:p-8 text-white shadow-2xl flex flex-col justify-between overflow-hidden">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-36 h-36 bg-blue-400/20 rounded-full blur-xl pointer-events-none" />
 

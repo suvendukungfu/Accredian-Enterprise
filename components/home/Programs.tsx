@@ -128,7 +128,7 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal }) => {
                   <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-1 text-xs text-slate-500 font-medium">
                       <Users className="w-3.5 h-3.5 text-slate-400" />
-                      <span className="truncate max-w-[120px]">{program.targetAudience.split(",")[0]}</span>
+                      <span className="truncate max-w-30">{program.targetAudience.split(",")[0]}</span>
                     </div>
 
                     <Button
