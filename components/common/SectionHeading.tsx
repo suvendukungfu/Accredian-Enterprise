@@ -11,6 +11,7 @@ interface SectionHeadingProps {
   highlightText?: string;
   subtitle?: string;
   align?: "left" | "center" | "right";
+  light?: boolean;
   className?: string;
 }
 
@@ -20,12 +21,13 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   highlightText,
   subtitle,
   align = "center",
+  light = false,
   className,
 }) => {
   const alignmentStyles = {
-    left: "text-left items-start",
-    center: "text-center items-center",
-    right: "text-right items-end",
+    left: "text-left items-start mx-0",
+    center: "text-center items-center mx-auto",
+    right: "text-right items-end ml-auto",
   };
 
   return (
@@ -37,22 +39,37 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       className={cn("flex flex-col max-w-3xl mb-12 sm:mb-16", alignmentStyles[align], className)}
     >
       {badgeText && (
-        <Badge variant="primary" className="mb-4">
+        <Badge variant={light ? "secondary" : "primary"} className="mb-4">
           {badgeText}
         </Badge>
       )}
 
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+      <h2
+        className={cn(
+          "text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight",
+          light ? "text-white" : "text-slate-900"
+        )}
+      >
         {title}{" "}
         {highlightText && (
-          <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <span
+            className={cn(
+              "bg-linear-to-r bg-clip-text text-transparent",
+              light ? "from-blue-400 to-indigo-300" : "from-blue-600 to-indigo-600"
+            )}
+          >
             {highlightText}
           </span>
         )}
       </h2>
 
       {subtitle && (
-        <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+        <p
+          className={cn(
+            "mt-4 text-base sm:text-lg leading-relaxed max-w-2xl",
+            light ? "text-slate-300" : "text-slate-600"
+          )}
+        >
           {subtitle}
         </p>
       )}

@@ -4,14 +4,13 @@ export interface NavItem {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Home", href: "#hero" },
-  { label: "Stats", href: "#stats" },
-  { label: "Clients", href: "#clients" },
+  { label: "Programs", href: "#programs" },
   { label: "Accredian Edge", href: "#edge" },
+  { label: "ROI Calculator", href: "#roi-calculator" },
+  { label: "Why Us", href: "#comparison" },
+  { label: "Case Studies", href: "#case-studies" },
   { label: "CAT Framework", href: "#cat" },
-  { label: "How It Works", href: "#how-it-works" },
   { label: "FAQs", href: "#faqs" },
-  { label: "Testimonials", href: "#testimonials" },
 ];
 
 export const FOOTER_LINKS = {

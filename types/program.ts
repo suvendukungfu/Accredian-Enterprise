@@ -8,6 +8,12 @@ export type ProgramCategory =
   | "Digital Business"
   | "Fintech";
 
+export interface ProgramModule {
+  week: string;
+  title: string;
+  topics: string[];
+}
+
 export interface ExecutiveProgram {
   id: string;
   title: string;
@@ -19,4 +25,13 @@ export interface ExecutiveProgram {
   keyOutcomes: string[];
   featuredBadge?: string;
   accentColor: string;
+  modules?: ProgramModule[];
+  techStack?: string[];
+  capstoneProject?: {
+    title: string;
+    description: string;
+  };
+  prerequisites?: string;
+  certificationPartner?: string;
 }
+

@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Users, CheckCircle2, ArrowRight, BookOpen } from "lucide-react";
+import { Clock, Users, CheckCircle2, ArrowRight, BookOpen, Search, X, Layers } from "lucide-react";
 import { PROGRAMS_DATA } from "@/constants/programsData";
-import { ProgramCategory } from "@/types/program";
+import { ExecutiveProgram, ProgramCategory } from "@/types/program";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/Card";
@@ -22,16 +22,28 @@ const CATEGORIES: ProgramCategory[] = [
 ];
 
 interface ProgramsProps {
-  onOpenEnquireModal: () => void;
+  onOpenEnquireModal: (options?: { domain?: string; message?: string }) => void;
+  onSelectProgram: (program: ExecutiveProgram) => void;
 }
 
-export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal }) => {
+export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelectProgram }) => {
   const [selectedCategory, setSelectedCategory] = useState<ProgramCategory>("All");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const filteredPrograms =
-    selectedCategory === "All"
-      ? PROGRAMS_DATA
-      : PROGRAMS_DATA.filter((p) => p.category === selectedCategory);
+  const filteredPrograms = PROGRAMS_DATA.filter((program) => {
+    const matchesCategory =
+      selectedCategory === "All" || program.category === selectedCategory;
+
+    const matchesSearch =
+      searchQuery.trim() === "" ||
+      program.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      program.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      program.keyOutcomes.some((o) => o.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (program.techStack &&
+        program.techStack.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())));
+
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <section id="programs" className="py-20 sm:py-28 bg-slate-50/70 border-y border-slate-200/60">
@@ -43,22 +55,67 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal }) => {
           subtitle="Explore enterprise-grade learning tracks built in collaboration with Fortune 500 technology leaders."
         />
 
-        {/* Category Tabs Filter */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                selectedCategory === cat
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/25"
-                  : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Search & Category Filter Controls */}
+        <div className="flex flex-col items-center gap-6 mb-12 max-w-3xl mx-auto">
+          {/* Instant Search Bar */}
+          <div className="relative w-full">
+            <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search programs by skill, tech stack, or title (e.g. LLM, Snowflake, RAG, Python)..."
+              className="w-full pl-12 pr-10 py-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                aria-label="Clear search"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Category Tabs Filter */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  selectedCategory === cat
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/25"
+                    : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
+
+        {/* Empty Search State */}
+        {filteredPrograms.length === 0 && (
+          <div className="py-16 text-center flex flex-col items-center justify-center bg-white rounded-3xl border border-slate-200 max-w-xl mx-auto shadow-sm">
+            <Search className="w-12 h-12 text-slate-300 mb-3" />
+            <h3 className="text-lg font-bold text-slate-900">No matching programs found</h3>
+            <p className="text-sm text-slate-500 max-w-md mt-1 mb-4">
+              Try searching for different keywords or reset your category filter. We also design custom enterprise curriculums on demand.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedCategory("All");
+              }}
+            >
+              Reset Filters
+            </Button>
+          </div>
+        )}
 
         {/* Program Cards Grid */}
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -75,7 +132,7 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal }) => {
                 <Card
                   variant="elevated"
                   padding="lg"
-                  className="h-full flex flex-col justify-between group hover:shadow-2xl hover:border-blue-200 transition-all"
+                  className="h-full flex flex-col justify-between group hover:shadow-2xl hover:border-blue-300 transition-all duration-300 bg-white"
                 >
                   <div className="flex flex-col gap-4">
                     {/* Header Badges */}
@@ -90,13 +147,35 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal }) => {
                       )}
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+                    <h3
+                      onClick={() => onSelectProgram(program)}
+                      className="text-xl font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors cursor-pointer"
+                    >
                       {program.title}
                     </h3>
 
                     <p className="text-sm text-slate-600 leading-relaxed">
                       {program.description}
                     </p>
+
+                    {/* Tech Stack Highlights */}
+                    {program.techStack && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {program.techStack.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-[11px] font-semibold bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md border border-slate-200/80"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {program.techStack.length > 4 && (
+                          <span className="text-[11px] font-semibold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md">
+                            +{program.techStack.length - 4} more
+                          </span>
+                        )}
+                      </div>
+                    )}
 
                     {/* Metadata Specs */}
                     <div className="flex items-center gap-4 text-xs font-medium text-slate-500 pt-2 border-t border-slate-100">
@@ -124,20 +203,23 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal }) => {
                     </div>
                   </div>
 
-                  {/* Card Footer CTA */}
+                  {/* Card Footer Actions */}
                   <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-1 text-xs text-slate-500 font-medium">
-                      <Users className="w-3.5 h-3.5 text-slate-400" />
-                      <span className="truncate max-w-30">{program.targetAudience.split(",")[0]}</span>
-                    </div>
+                    <button
+                      onClick={() => onSelectProgram(program)}
+                      className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 group/btn"
+                    >
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>View Syllabus</span>
+                    </button>
 
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={onOpenEnquireModal}
+                      onClick={() => onSelectProgram(program)}
                       rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
                     >
-                      Request Syllabus
+                      Full Details
                     </Button>
                   </div>
                 </Card>

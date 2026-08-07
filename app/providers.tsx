@@ -9,10 +9,16 @@ interface ToastState {
   type: "success" | "error";
 }
 
+interface LeadModalOptions {
+  domain?: string;
+  message?: string;
+}
+
 interface AppContextType {
   showToast: (message: string, type?: "success" | "error") => void;
   isLeadModalOpen: boolean;
-  openLeadModal: () => void;
+  leadModalOptions: LeadModalOptions | null;
+  openLeadModal: (options?: LeadModalOptions) => void;
   closeLeadModal: () => void;
 }
 
@@ -26,6 +32,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+  const [leadModalOptions, setLeadModalOptions] = useState<LeadModalOptions | null>(null);
 
   const showToast = (message: string, type: "success" | "error" = "success") => {
     setToast({ isVisible: true, message, type });
@@ -34,14 +41,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }, 4000);
   };
 
-  const openLeadModal = () => setIsLeadModalOpen(true);
-  const closeLeadModal = () => setIsLeadModalOpen(false);
+  const openLeadModal = (options?: LeadModalOptions) => {
+    if (options) {
+      setLeadModalOptions(options);
+    } else {
+      setLeadModalOptions(null);
+    }
+    setIsLeadModalOpen(true);
+  };
+
+  const closeLeadModal = () => {
+    setIsLeadModalOpen(false);
+    setLeadModalOptions(null);
+  };
 
   return (
     <AppContext.Provider
       value={{
         showToast,
         isLeadModalOpen,
+        leadModalOptions,
         openLeadModal,
         closeLeadModal,
       }}

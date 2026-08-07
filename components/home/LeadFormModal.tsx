@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal } from "@/components/common/Modal";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { useLeadForm } from "@/hooks/useLeadForm";
+import { useApp } from "@/app/providers";
 import { User, Mail, Phone, Building2, Briefcase, Send, AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface LeadFormModalProps {
@@ -37,6 +38,8 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
   onClose,
   onShowToast,
 }) => {
+  const { leadModalOptions } = useApp();
+
   const handleSuccess = () => {
     onShowToast("Enquiry submitted successfully! Our Enterprise Team will contact you shortly.");
     setTimeout(() => {
@@ -49,8 +52,20 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
 
   const {
     register,
+    setValue,
     formState: { errors },
   } = form;
+
+  useEffect(() => {
+    if (isOpen && leadModalOptions) {
+      if (leadModalOptions.domain) {
+        setValue("domain", leadModalOptions.domain as any);
+      }
+      if (leadModalOptions.message) {
+        setValue("message", leadModalOptions.message);
+      }
+    }
+  }, [isOpen, leadModalOptions, setValue]);
 
   return (
     <Modal
