@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, ArrowRight, Sparkles, TrendingUp, Users, Award, ShieldCheck, Activity, Cpu } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, TrendingUp, Users, Award, ShieldCheck, Activity, Cpu, Star } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/common/Badge";
@@ -269,8 +269,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-4 -left-4 bg-white p-3.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 z-20"
               >
-                <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                  ★ 4.7
+                <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs gap-1">
+                  <Star className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
+                  <span>4.7</span>
                 </div>
                 <div>
                   <div className="text-xs font-bold text-slate-900">Top Rated Programs</div>
