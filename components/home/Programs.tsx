@@ -105,7 +105,7 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
 
         {/* Empty Search State */}
         {filteredPrograms.length === 0 && (
-          <div className="py-16 text-center flex flex-col items-center justify-center bg-white rounded-[24px] border border-[#E5E7EB] max-w-xl mx-auto shadow-sm">
+          <div className="py-16 text-center flex flex-col items-center justify-center bg-white rounded-3xl border border-[#E5E7EB] max-w-xl mx-auto shadow-sm">
             <Search className="w-12 h-12 text-slate-300 mb-3" />
             <h3 className="text-lg font-bold text-[#0F172A]">No matching programs found</h3>
             <p className="text-sm text-slate-500 max-w-md mt-1 mb-6">
@@ -156,7 +156,7 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
                         priority={program.id === "gen-ai-enterprise"}
                         className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent" />
                     </div>
                   )}
 
