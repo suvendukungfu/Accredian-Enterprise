@@ -74,7 +74,7 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({ onOpenEnquir
             isAccredian ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-600"
           }`}
         >
-          <Check className="w-4 h-4 stroke-[3]" />
+          <Check className="w-4 h-4 stroke-3" />
         </div>
       ) : (
         <div className="w-7 h-7 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
@@ -116,9 +116,9 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({ onOpenEnquir
 
         {/* Matrix Card Table */}
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white border border-[#E5E7EB] rounded-[24px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
+          <div className="bg-white border border-[#E5E7EB] rounded-3xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[700px]">
+              <table className="w-full text-left border-collapse min-w-175">
                 <thead>
                   <tr className="border-b border-[#E5E7EB] bg-[#FAFBFD]">
                     <th className="py-5 px-6 text-[13px] font-bold text-[#0F172A] w-1/3">
@@ -176,7 +176,7 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({ onOpenEnquir
               </p>
               <button
                 onClick={onOpenEnquireModal}
-                className="h-[48px] px-6 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[13px] inline-flex items-center gap-2 transition-all duration-200 shadow-sm active:scale-[0.98] cursor-pointer"
+                className="h-12 px-6 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[13px] inline-flex items-center gap-2 transition-all duration-200 shadow-sm active:scale-[0.98] cursor-pointer"
               >
                 <span>Schedule Executive Audit</span>
                 <ArrowRight className="w-4 h-4" />

@@ -156,7 +156,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onOpenEnquireM
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.3 }}
-              className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300"
+              className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-7 flex flex-col gap-5">
@@ -190,7 +190,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onOpenEnquireM
                           message: `Requesting enterprise blueprint for ${currentIndustry.label}.`,
                         })
                       }
-                      className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[14px] transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 h-13 px-7 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[14px] transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
                     >
                       <span>Download {currentIndustry.label} Blueprint</span>
                       <ArrowRight className="w-4 h-4" />

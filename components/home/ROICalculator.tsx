@@ -80,7 +80,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
 
         {/* Calculator Main Card */}
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
+          <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
               {/* Left Column Controls */}
               <div className="lg:col-span-6 flex flex-col gap-6">
@@ -227,7 +227,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
                       message: `Requesting ROI audit for team of ${teamSize} employees in ${selectedDomain}.`,
                     })
                   }
-                  className="w-full h-[56px] rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[15px] inline-flex items-center justify-center gap-2 transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
+                  className="w-full h-14 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[15px] inline-flex items-center justify-center gap-2 transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
                 >
                   <span>Book Custom ROI Audit</span>
                   <ArrowRight className="w-4.5 h-4.5" />

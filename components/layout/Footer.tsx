@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
                 <span className="text-[22px] font-extrabold text-white tracking-[-0.02em]">
                   accredian<span className="text-blue-500">.</span>
                 </span>
-                <span className="text-[10px] uppercase font-semibold tracking-[0.12em] text-slate-500 mt-[1px]">
+                <span className="text-[10px] uppercase font-semibold tracking-[0.12em] text-slate-500 mt-px">
                   credentials that matter
                 </span>
               </div>

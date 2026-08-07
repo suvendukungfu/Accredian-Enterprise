@@ -48,8 +48,8 @@ export const LearningJourney: React.FC = () => {
   return (
     <section id="how-it-works" className="py-20 sm:py-28 bg-[#0F172A] text-white relative overflow-hidden">
       {/* Background Orbs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-125 h-125 bg-blue-600/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-125 h-125 bg-indigo-600/8 rounded-full blur-[120px] pointer-events-none" />
 
       <Container className="relative z-10">
         {/* Header */}
@@ -85,7 +85,7 @@ export const LearningJourney: React.FC = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              className="bg-slate-900/60 border border-slate-800 backdrop-blur-xl p-8 rounded-[24px] flex flex-col justify-between hover:border-blue-500/40 transition-all duration-300 group shadow-xl"
+              className="bg-slate-900/60 border border-slate-800 backdrop-blur-xl p-8 rounded-3xl flex flex-col justify-between hover:border-blue-500/40 transition-all duration-300 group shadow-xl"
             >
               <div>
                 <div className="flex items-center justify-between mb-7">

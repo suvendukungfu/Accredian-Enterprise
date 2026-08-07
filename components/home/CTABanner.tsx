@@ -21,8 +21,8 @@ export const CTABanner: React.FC<CTABannerProps> = ({ onOpenEnquireModal }) => {
           className="relative rounded-[28px] bg-linear-to-r from-[#1E3A8A] via-[#2563EB] to-[#4F46E5] p-10 sm:p-14 lg:p-16 text-white shadow-2xl shadow-blue-900/20 overflow-hidden"
         >
           {/* Background Orbs */}
-          <div className="absolute -top-32 -right-32 w-[400px] h-[400px] bg-white/8 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-indigo-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-32 -right-32 w-100 h-100 bg-white/8 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-100 h-100 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
             <div className="flex flex-col gap-5 text-center lg:text-left max-w-2xl">
@@ -52,7 +52,7 @@ export const CTABanner: React.FC<CTABannerProps> = ({ onOpenEnquireModal }) => {
             <div className="shrink-0">
               <button
                 onClick={onOpenEnquireModal}
-                className="inline-flex items-center gap-2.5 h-[56px] px-8 rounded-2xl bg-white text-[#0F172A] font-bold text-[15px] shadow-xl hover:shadow-2xl hover:bg-slate-50 transition-all duration-200 active:scale-[0.98] group"
+                className="inline-flex items-center gap-2.5 h-14 px-8 rounded-2xl bg-white text-[#0F172A] font-bold text-[15px] shadow-xl hover:shadow-2xl hover:bg-slate-50 transition-all duration-200 active:scale-[0.98] group"
               >
                 <span>Enquire Now</span>
                 <ArrowRight className="w-4.5 h-4.5 text-blue-600 group-hover:translate-x-0.5 transition-transform" />

@@ -88,11 +88,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
   return (
     <section
       id="hero"
-      className="relative pt-[100px] sm:pt-[120px] pb-16 sm:pb-24 page-bg-gradient transition-colors overflow-hidden"
+      className="relative pt-25 sm:pt-30 pb-16 sm:pb-24 page-bg-gradient transition-colors overflow-hidden"
     >
       {/* Hero Headline & 3D Canvas */}
       <Container className="relative z-10 mb-16 sm:mb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-center min-h-[340px] sm:min-h-[420px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-center min-h-85 sm:min-h-105">
           {/* Left: Headline */}
           <motion.div
             custom={0}
@@ -107,7 +107,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
               Enterprise Talent
             </h1>
 
-            <p className="text-[17px] sm:text-[19px] text-[#64748B] font-normal leading-[1.65] max-w-[520px] mt-5">
+            <p className="text-[17px] sm:text-[19px] text-[#64748B] font-normal leading-[1.65] max-w-130 mt-5">
               Bberd display typography
             </p>
           </motion.div>
@@ -118,7 +118,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="lg:col-span-5 relative h-[280px] sm:h-[400px] w-full"
+            className="lg:col-span-5 relative h-70 sm:h-100 w-full"
           >
             <Hero3DCanvas />
           </motion.div>
@@ -137,7 +137,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              className="bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300"
+              className="bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300"
             >
               <h2 className="text-[22px] sm:text-[24px] font-bold text-[#0F172A] tracking-[-0.02em] leading-tight">
                 Trusted by Industry Leaders
@@ -176,7 +176,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              className="bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300 flex-1"
+              className="bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300 flex-1"
             >
               <h3 className="text-[22px] sm:text-[24px] font-bold text-[#0F172A] tracking-[-0.02em]">
                 ROI estimator
@@ -194,7 +194,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="lg:col-span-7 bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300 flex flex-col justify-between"
+            className="lg:col-span-7 bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300 flex flex-col justify-between"
           >
             <div className="flex flex-col gap-7">
               {/* Enterprise Size Slider */}
@@ -268,7 +268,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
 
               <button
                 onClick={onOpenEnquireModal}
-                className="w-full h-[56px] rounded-2xl bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold text-[15px] transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98] cursor-pointer"
+                className="w-full h-14 rounded-2xl bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold text-[15px] transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98] cursor-pointer"
               >
                 Book Executive Audit
               </button>

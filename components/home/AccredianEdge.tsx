@@ -85,7 +85,7 @@ export const AccredianEdge: React.FC = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              className="bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200 flex flex-col"
+              className="bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200 flex flex-col"
             >
               <div className={`w-11 h-11 rounded-xl border flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200 ${pillar.iconColor}`}>
                 {pillar.icon}

@@ -92,7 +92,7 @@ export const SuccessMetrics: React.FC = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              className="bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200"
+              className="bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200"
             >
               <div className="flex flex-col gap-2">
                 <div className="text-[40px] sm:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] flex items-baseline leading-none">

@@ -89,7 +89,7 @@ export const DataVizSection: React.FC = () => {
 
         {/* Interactive Chart Card Container */}
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white border border-[#E5E7EB] rounded-[24px] p-6 sm:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
+          <div className="bg-white border border-[#E5E7EB] rounded-3xl p-6 sm:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
             <AnimatePresence mode="wait">
               {activeChart === "outcomes" ? (
                 <motion.div
@@ -122,7 +122,7 @@ export const DataVizSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="h-[320px] sm:h-[380px] w-full pt-4">
+                  <div className="h-80 sm:h-95 w-full pt-4">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={OUTCOMES_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
@@ -188,7 +188,7 @@ export const DataVizSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="h-[320px] sm:h-[380px] w-full pt-4">
+                  <div className="h-80 sm:h-95 w-full pt-4">
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={GROWTH_DATA} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                         <defs>

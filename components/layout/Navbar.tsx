@@ -42,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           : "bg-white/60 backdrop-blur-sm py-0 border-b border-slate-200/40"
       }`}
     >
-      <Container className="flex items-center justify-between h-[72px] lg:h-[84px]">
+      <Container className="flex items-center justify-between h-18 lg:h-21">
         {/* Brand Logo */}
         <Link
           href="#hero"
@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="text-[20px] font-bold text-[#0F172A] tracking-[-0.02em]">
               Accredian
             </span>
-            <span className="text-[9px] uppercase font-semibold tracking-[0.15em] text-[#64748B] mt-[1px]">
+            <span className="text-[9px] uppercase font-semibold tracking-[0.15em] text-[#64748B] mt-px">
               ENTERPRISE
             </span>
           </div>
@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
               {/* Hover underline indicator */}
               <motion.span
-                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#0F172A] rounded-full"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0F172A] rounded-full"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: hoveredItem === item.label ? 1 : 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
@@ -94,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Request Demo CTA */}
           <button
             onClick={onOpenEnquireModal}
-            className="hidden sm:inline-flex h-[44px] px-6 items-center justify-center rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-white font-semibold text-[14px] transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98]"
+            className="hidden sm:inline-flex h-11 px-6 items-center justify-center rounded-lg bg-[#0F172A] hover:bg-[#1E293B] text-white font-semibold text-[14px] transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98]"
           >
             Request Demo
           </button>
@@ -138,7 +138,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenEnquireModal();
                   }}
-                  className="w-full h-[52px] rounded-xl bg-[#0F172A] text-white font-semibold text-[15px] text-center active:scale-[0.98] transition-transform"
+                  className="w-full h-13 rounded-xl bg-[#0F172A] text-white font-semibold text-[15px] text-center active:scale-[0.98] transition-transform"
                 >
                   Request Demo
                 </button>

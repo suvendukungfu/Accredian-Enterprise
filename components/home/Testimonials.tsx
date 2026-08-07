@@ -63,7 +63,7 @@ export const Testimonials: React.FC = () => {
 
         {/* Testimonial Card */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 sm:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
+          <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 pb-6 border-b border-[#F1F5F9]">
               <div className="flex items-center gap-3">
