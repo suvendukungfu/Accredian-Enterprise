@@ -48,12 +48,10 @@ export const TESTIMONIALS_DATA: ClientTestimonial[] = [
 ];
 
 export const TRUSTED_CLIENTS = [
-  { name: "ADP", logo: "ADP" },
-  { name: "Bayer", logo: "BAYER" },
-  { name: "Reliance Industries", logo: "RELIANCE" },
-  { name: "Genpact", logo: "GENPACT" },
-  { name: "Pramerica", logo: "PRAMERICA" },
-  { name: "Insplore", logo: "INSPLORE" },
-  { name: "Tech Mahindra", logo: "TECHM" },
-  { name: "Wipro Enterprise", logo: "WIPRO" },
+  { name: "Microsoft", logo: "Microsoft" },
+  { name: "Salesforce", logo: "salesforce" },
+  { name: "Deloitte", logo: "Deloitte." },
+  { name: "Adobe", logo: "Adobe" },
+  { name: "Accenture", logo: "accenture" },
+  { name: "IBM", logo: "IBM" },
 ];
