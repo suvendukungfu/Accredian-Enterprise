@@ -249,7 +249,7 @@ const InteractiveCard: React.FC<CardProps> = ({ step, index, isActive, onHover }
       />
 
       {/* Edge border reflection highlight */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-600/30 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-slate-600/30 to-transparent pointer-events-none" />
 
       <div>
         <div className="flex items-center justify-between mb-7">
@@ -364,7 +364,7 @@ const MagneticButton: React.FC<{
     >
       {/* Unlocked animated shiny effect */}
       {unlocked && (
-        <span className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-r from-blue-500/0 via-white/20 to-blue-500/0 -translate-x-full group-hover:animate-shimmer pointer-events-none" />
+        <span className="absolute inset-0 w-full h-full rounded-2xl bg-linear-to-r from-blue-500/0 via-white/20 to-blue-500/0 -translate-x-full group-hover:animate-shimmer pointer-events-none" />
       )}
 
       <span>{unlocked ? "Book Diagnostic Audit" : "Scroll to Unlock Journey"}</span>
@@ -442,8 +442,8 @@ export const LearningJourney: React.FC<LearningJourneyProps> = ({ onOpenEnquireM
       <AmbientBackground />
 
       {/* Floating Volumetric Blur Lights */}
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
+      <div className="absolute top-1/4 left-1/4 w-87.5 h-87.5 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-87.5 h-87.5 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
 
       <Container className="relative z-10">
         {/* Section Header */}
