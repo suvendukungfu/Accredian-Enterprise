@@ -27,7 +27,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const savedTheme = localStorage.getItem("accredian-theme") as Theme | null;
       if (savedTheme) return savedTheme;
     }
-    return "system";
+    return "light";
   });
 
   const isSystemDark = useSyncExternalStore(
