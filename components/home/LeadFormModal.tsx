@@ -75,8 +75,8 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
         resetForm();
         onClose();
       }}
-      title="Partner With Accredian"
-      subtitle="Fill out the form below to request a tailored corporate curriculum or schedule an enterprise discovery call."
+      title="Talk With a Senior Curriculum Architect"
+      subtitle="Schedule a 15-minute diagnostic call with our tech leads. No sales pitches — just a practical evaluation of your team's skill targets."
       maxWidth="xl"
     >
       {isSuccess ? (
