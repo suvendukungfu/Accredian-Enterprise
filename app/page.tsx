@@ -1,5 +1,9 @@
 "use client";
 
+/**
+ * Accredian Enterprise Main Platform Page
+ * Next.js App Router Page Layout
+ */
 import React, { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
