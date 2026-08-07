@@ -11,6 +11,7 @@ Engineered following Senior Staff Frontend Architecture principles focusing on p
 - **Enterprise Capability Architecture**: Clean separation of concerns across `components/layout`, `components/common`, `components/ui`, and `components/home`.
 - **Interactive Enterprise ROI Estimator**: Real-time business case calculator for enterprise decision-makers to project workforce productivity gains, hours saved, and financial ROI.
 - **Program Syllabus Slide-Over Drawer**: Interactive drawer displaying week-by-week module syllabi, tech stack badges (PyTorch, LangChain, Snowflake, Databricks), prerequisites, and capstone project specifications.
+- **Interactive 3D Timeline & Self-Drawing Path**: An Awwwards-level cinematic interactive timeline powered by Canvas Particle background, scroll-linked SVG path rendering, and magnetic Apple-quality button interactions.
 - **Enterprise Capability Comparison Matrix**: Feature-by-feature comparison matrix evaluating Accredian Enterprise against traditional MOOCs, internal LMS, and short workshops.
 - **Verified Case Studies Spotlight**: Interactive success story spotlights featuring quantifiable metrics from global financial banks, healthcare leaders, and SaaS enterprises.
 - **Instant Search & Category Filter**: Live keyword search across program titles, tech stacks, and key learning outcomes.
