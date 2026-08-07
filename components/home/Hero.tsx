@@ -1,10 +1,23 @@
 "use client";
 
 import React, { useState, useCallback, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ShieldCheck, Lock, Building2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Hero3DCanvas } from "./Hero3DCanvas";
+
+// Dynamically import Three.js Canvas to optimize initial load and page performance
+const Hero3DCanvas = dynamic(
+  () => import("./Hero3DCanvas").then((mod) => mod.Hero3DCanvas),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="absolute inset-0 flex items-center justify-center bg-slate-100/10 dark:bg-slate-900/10 rounded-3xl animate-pulse">
+        <span className="text-xs text-slate-400 font-medium tracking-wider">Initializing WebGL Engine...</span>
+      </div>
+    ),
+  }
+);
 
 interface HeroProps {
   onOpenEnquireModal: () => void;
