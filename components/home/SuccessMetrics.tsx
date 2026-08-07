@@ -4,9 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { METRICS_DATA } from "@/constants/metricsData";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/common/SectionHeading";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { Card } from "@/components/ui/Card";
 
 interface CounterProps {
   end: number;
@@ -26,8 +24,6 @@ const Counter: React.FC<CounterProps> = ({ end, duration = 2, isVisible }) => {
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
-
-      // EaseOutQuart function for smooth decelerating count-up
       const easeProgress = 1 - Math.pow(1 - progress, 4);
       setCount(Math.floor(easeProgress * end));
 
@@ -39,55 +35,79 @@ const Counter: React.FC<CounterProps> = ({ end, duration = 2, isVisible }) => {
     };
 
     animationFrameId = requestAnimationFrame(animate);
-
     return () => cancelAnimationFrame(animationFrameId);
   }, [end, duration, isVisible]);
 
-  return <span>{count.toLocaleString()}</span>;
+  return <span className="tabular-nums">{count.toLocaleString()}</span>;
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1 },
+  }),
 };
 
 export const SuccessMetrics: React.FC = () => {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
 
   return (
-    <section id="stats" ref={ref as React.RefObject<HTMLDivElement>} className="py-20 sm:py-28 bg-slate-50/60 dark:bg-slate-900/40 transition-colors">
+    <section
+      id="stats"
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors"
+    >
       <Container>
-        <SectionHeading
-          badgeText="Impact & Scale"
-          title="Our"
-          highlightText="Track Record"
-          subtitle="Delivering measurable talent transformation and business results for world-class organizations."
-        />
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
+        >
+          <span className="inline-flex items-center px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
+            Impact & Scale
+          </span>
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
+            Our{" "}
+            <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Track Record
+            </span>
+          </h2>
+          <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
+            Delivering measurable talent transformation and business results for world-class organizations.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {METRICS_DATA.map((metric, idx) => (
             <motion.div
               key={metric.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={idx}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              variants={fadeUp}
+              className="bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200"
             >
-              <Card
-                variant="elevated"
-                padding="lg"
-                className="h-full flex flex-col justify-between group hover:border-blue-300 dark:hover:border-blue-500 dark:bg-slate-900/80 dark:border-slate-800 transition-colors"
-              >
-                <div className="flex flex-col gap-2">
-                  <div className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight flex items-center">
-                    {metric.prefix}
-                    <Counter end={metric.value} isVisible={isVisible} />
-                    <span className="text-blue-600 dark:text-blue-400 ml-0.5">{metric.suffix}</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 pt-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {metric.label}
-                  </h3>
+              <div className="flex flex-col gap-2">
+                <div className="text-[40px] sm:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] flex items-baseline leading-none">
+                  {metric.prefix}
+                  <Counter end={metric.value} isVisible={isVisible} />
+                  <span className="text-blue-600 ml-0.5">{metric.suffix}</span>
                 </div>
+                <h3 className="text-[16px] font-bold text-[#334155] pt-1 group-hover:text-blue-600 transition-colors">
+                  {metric.label}
+                </h3>
+              </div>
 
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-4">
-                  {metric.description}
-                </p>
-              </Card>
+              <p className="text-[13px] text-[#94A3B8] mt-5 leading-[1.6] border-t border-[#F1F5F9] pt-5">
+                {metric.description}
+              </p>
             </motion.div>
           ))}
         </div>

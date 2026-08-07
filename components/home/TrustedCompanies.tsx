@@ -3,29 +3,40 @@
 import React from "react";
 import { TRUSTED_CLIENTS } from "@/constants/testimonialsData";
 import { Container } from "@/components/ui/Container";
-import { InfiniteMarquee } from "@/components/ui/InfiniteMarquee";
 
 export const TrustedCompanies: React.FC = () => {
   return (
-    <section id="clients" className="py-12 bg-white dark:bg-slate-950 border-y border-slate-100 dark:border-slate-800 transition-colors overflow-hidden">
-      <Container className="mb-6">
-        <p className="text-xs uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 text-center">
-          Trusted by Engineering Leaders at Top Global Enterprises
-        </p>
-      </Container>
-
-      <InfiniteMarquee speed={35} pauseOnHover>
-        {TRUSTED_CLIENTS.map((client) => (
-          <div
-            key={client.name}
-            className="flex items-center gap-2 px-6 py-2 transition-all cursor-pointer group"
-          >
-            <span className="text-base sm:text-lg font-extrabold tracking-widest uppercase text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
+    <section
+      id="clients"
+      className="py-10 sm:py-12 bg-white border-y border-[#E5E7EB] transition-colors"
+    >
+      <Container>
+        <div className="flex items-center justify-between sm:justify-center gap-8 sm:gap-14 lg:gap-20 overflow-x-auto scrollbar-hide">
+          {TRUSTED_CLIENTS.map((client) => (
+            <span
+              key={client.name}
+              className="text-[16px] sm:text-[18px] font-bold text-[#94A3B8] hover:text-[#475569] transition-colors duration-300 whitespace-nowrap shrink-0 tracking-[-0.01em] cursor-default select-none"
+              style={{
+                fontWeight:
+                  client.name === "Deloitte" || client.name === "IBM"
+                    ? 900
+                    : client.name === "Salesforce"
+                    ? 700
+                    : 800,
+                fontStyle: client.name === "Salesforce" ? "italic" : "normal",
+                letterSpacing:
+                  client.name === "IBM"
+                    ? "0.08em"
+                    : client.name === "accenture"
+                    ? "0.01em"
+                    : "-0.01em",
+              }}
+            >
               {client.logo}
             </span>
-          </div>
-        ))}
-      </InfiniteMarquee>
+          ))}
+        </div>
+      </Container>
     </section>
   );
 };

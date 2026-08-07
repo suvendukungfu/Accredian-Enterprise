@@ -4,77 +4,100 @@ import React from "react";
 import { motion } from "framer-motion";
 import { SlidersHorizontal, Laptop2, CalendarCheck, ShieldAlert } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/common/SectionHeading";
-import { Card } from "@/components/ui/Card";
 
 const PILLARS = [
   {
     id: "customized-curriculums",
-    icon: <SlidersHorizontal className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+    icon: <SlidersHorizontal className="w-5 h-5" />,
+    iconColor: "text-blue-600 bg-blue-50 border-blue-100",
     title: "Customized Curriculums",
     description:
       "Every program is tailored to your organization's specific technical ecosystem, internal datasets, business objectives, and competency frameworks.",
   },
   {
     id: "practical-learning",
-    icon: <Laptop2 className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />,
+    icon: <Laptop2 className="w-5 h-5" />,
+    iconColor: "text-indigo-600 bg-indigo-50 border-indigo-100",
     title: "Hands-on Practical Learning",
     description:
       "Employees build production-ready projects, work through real-world case studies, and apply industry best practices directly to active enterprise initiatives.",
   },
   {
     id: "flexible-delivery",
-    icon: <CalendarCheck className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />,
+    icon: <CalendarCheck className="w-5 h-5" />,
+    iconColor: "text-emerald-600 bg-emerald-50 border-emerald-100",
     title: "Flexible Delivery Formats",
     description:
       "Choose live interactive online cohorts, immersive on-premise executive workshops, or self-paced blended learning paths tailored to your global workforce schedules.",
   },
   {
     id: "post-program-support",
-    icon: <ShieldAlert className="w-6 h-6 text-amber-600 dark:text-amber-400" />,
+    icon: <ShieldAlert className="w-5 h-5" />,
+    iconColor: "text-amber-600 bg-amber-50 border-amber-100",
     title: "Post-Program Support",
     description:
       "Continuous learning resources, mentorship access, cohort skill gap tracking, and capstone evaluation dashboards ensure long-term knowledge retention.",
   },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1 },
+  }),
+};
+
 export const AccredianEdge: React.FC = () => {
   return (
-    <section id="edge" className="py-20 sm:py-28 bg-white dark:bg-slate-950 transition-colors">
+    <section id="edge" className="py-20 sm:py-28 bg-white transition-colors">
       <Container>
-        <SectionHeading
-          badgeText="Why Partner With Us"
-          title="The"
-          highlightText="Accredian Edge"
-          subtitle="Our enterprise capability building methodology combines rigorous academic fundamentals with agile industry practice."
-        />
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
+        >
+          <span className="inline-flex items-center px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
+            Why Partner With Us
+          </span>
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
+            The{" "}
+            <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Accredian Edge
+            </span>
+          </h2>
+          <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
+            Our enterprise capability building methodology combines rigorous academic fundamentals with agile industry practice.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {PILLARS.map((pillar, idx) => (
             <motion.div
               key={pillar.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              custom={idx}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              variants={fadeUp}
+              className="bg-white border border-[#E5E7EB] rounded-[24px] p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200 flex flex-col"
             >
-              <Card
-                variant="elevated"
-                padding="lg"
-                className="h-full flex flex-col justify-start group hover:shadow-2xl hover:shadow-blue-500/10 border-slate-100 dark:border-slate-800 dark:bg-slate-900/60 hover:border-blue-200 dark:hover:border-blue-500 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-blue-50 dark:group-hover:bg-blue-950 transition-all">
-                  {pillar.icon}
-                </div>
+              <div className={`w-11 h-11 rounded-xl border flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200 ${pillar.iconColor}`}>
+                {pillar.icon}
+              </div>
 
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {pillar.title}
-                </h3>
+              <h3 className="text-[17px] font-bold text-[#0F172A] mb-3 group-hover:text-blue-600 transition-colors leading-snug">
+                {pillar.title}
+              </h3>
 
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {pillar.description}
-                </p>
-              </Card>
+              <p className="text-[13px] text-[#64748B] leading-[1.65] flex-1">
+                {pillar.description}
+              </p>
             </motion.div>
           ))}
         </div>
