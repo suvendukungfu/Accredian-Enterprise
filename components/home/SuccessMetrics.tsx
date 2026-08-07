@@ -50,7 +50,7 @@ export const SuccessMetrics: React.FC = () => {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
 
   return (
-    <section id="stats" ref={ref as React.RefObject<HTMLDivElement>} className="py-20 sm:py-28 bg-slate-50/60">
+    <section id="stats" ref={ref as React.RefObject<HTMLDivElement>} className="py-20 sm:py-28 bg-slate-50/60 dark:bg-slate-900/40 transition-colors">
       <Container>
         <SectionHeading
           badgeText="Impact & Scale"
@@ -71,20 +71,20 @@ export const SuccessMetrics: React.FC = () => {
               <Card
                 variant="elevated"
                 padding="lg"
-                className="h-full flex flex-col justify-between group hover:border-blue-300 transition-colors"
+                className="h-full flex flex-col justify-between group hover:border-blue-300 dark:hover:border-blue-500 dark:bg-slate-900/80 dark:border-slate-800 transition-colors"
               >
                 <div className="flex flex-col gap-2">
-                  <div className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight flex items-center">
+                  <div className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight flex items-center">
                     {metric.prefix}
                     <Counter end={metric.value} isVisible={isVisible} />
-                    <span className="text-blue-600 ml-0.5">{metric.suffix}</span>
+                    <span className="text-blue-600 dark:text-blue-400 ml-0.5">{metric.suffix}</span>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-800 pt-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 pt-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {metric.label}
                   </h3>
                 </div>
 
-                <p className="text-sm text-slate-500 mt-4 leading-relaxed border-t border-slate-100 pt-4">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-4">
                   {metric.description}
                 </p>
               </Card>
