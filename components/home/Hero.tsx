@@ -63,15 +63,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal, onOpenCommandPal
                 </button>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1]">
-                Next-Gen{" "}
-                <span className="bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  Expertise
-                </span>{" "}
-                <br />
-                For Your{" "}
-                <span className="bg-linear-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                  Enterprise
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.08]">
+                Next-Gen Expertise <br />
+                <span className="text-blue-600 dark:text-blue-400">
+                  For Your Enterprise
                 </span>
               </h1>
 
@@ -123,9 +118,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal, onOpenCommandPal
               className="lg:col-span-5 relative flex items-center justify-center z-10"
             >
               {/* Graphic Card Illustration */}
-              <div className="relative w-full aspect-4/3 rounded-2xl bg-linear-to-br from-slate-900 via-blue-950 to-indigo-950 p-5 sm:p-7 text-white shadow-2xl flex flex-col justify-between overflow-hidden border border-blue-500/30">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-36 h-36 bg-purple-500/10 rounded-full blur-xl pointer-events-none" />
+              <div className="relative w-full aspect-4/3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 p-5 sm:p-7 text-white shadow-xl flex flex-col justify-between overflow-hidden border border-slate-800">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-36 h-36 bg-indigo-500/5 rounded-full blur-xl pointer-events-none" />
 
                 {/* Dashboard Window Header */}
                 <div className="flex items-center justify-between z-10 border-b border-white/10 pb-3">

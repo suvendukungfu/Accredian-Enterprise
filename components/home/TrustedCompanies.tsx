@@ -18,9 +18,9 @@ export const TrustedCompanies: React.FC = () => {
         {TRUSTED_CLIENTS.map((client) => (
           <div
             key={client.name}
-            className="flex items-center gap-3 px-6 py-2 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 hover:border-blue-500 transition-all cursor-pointer group"
+            className="flex items-center gap-2 px-6 py-2 transition-all cursor-pointer group"
           >
-            <span className="text-lg sm:text-xl font-black text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight">
+            <span className="text-base sm:text-lg font-extrabold tracking-widest uppercase text-slate-400 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
               {client.logo}
             </span>
           </div>

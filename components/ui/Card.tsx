@@ -26,12 +26,12 @@ export const Card: React.FC<CardProps> = ({
   };
 
   const variantStyles = {
-    flat: "bg-slate-50/80 border border-slate-100",
+    flat: "bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800",
     elevated:
-      "bg-white shadow-xl shadow-slate-200/50 border border-slate-100/80",
-    bordered: "bg-white border-2 border-slate-200/80",
+      "bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/80 dark:border-slate-800",
+    bordered: "bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800",
     glass:
-      "bg-white/80 backdrop-blur-xl border border-white/60 shadow-xl shadow-slate-900/5",
+      "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-900/5 dark:shadow-none",
   };
 
   return (
