@@ -33,5 +33,6 @@ export interface ExecutiveProgram {
   };
   prerequisites?: string;
   certificationPartner?: string;
+  image?: string;
 }
 
