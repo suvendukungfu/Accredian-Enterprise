@@ -3,14 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, CheckCircle2, ArrowRight, BookOpen, Search, X, Layers } from "lucide-react";
+import { Clock, CheckCircle2, ArrowRight, BookOpen, Search, X, Layers, Sparkles } from "lucide-react";
 import { PROGRAMS_DATA } from "@/constants/programsData";
 import { ExecutiveProgram, ProgramCategory } from "@/types/program";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/common/SectionHeading";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/common/Badge";
-import { Button } from "@/components/ui/Button";
 
 const CATEGORIES: ProgramCategory[] = [
   "All",
@@ -47,32 +43,42 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
   });
 
   return (
-    <section id="programs" className="py-20 sm:py-28 bg-slate-50/70 dark:bg-slate-950/70 border-y border-slate-200/60 dark:border-slate-800 transition-colors">
+    <section id="programs" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
       <Container>
-        <SectionHeading
-          badgeText="Executive Education"
-          title="Co-Created"
-          highlightText="Curriculums"
-          subtitle="Explore enterprise-grade learning tracks built in collaboration with Fortune 500 technology leaders."
-        />
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <span>Executive Education</span>
+          </span>
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
+            Co-Created{" "}
+            <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Curriculums
+            </span>
+          </h2>
+          <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
+            Explore enterprise-grade learning tracks built in collaboration with Fortune 500 technology leaders.
+          </p>
+        </div>
 
         {/* Search & Category Filter Controls */}
-        <div className="flex flex-col items-center gap-6 mb-12 max-w-3xl mx-auto">
-          {/* Instant Search Bar */}
+        <div className="flex flex-col items-center gap-5 mb-14 max-w-3xl mx-auto">
+          {/* Search Bar */}
           <div className="relative w-full">
-            <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-4.5 h-4.5 text-[#94A3B8] absolute left-4.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search programs by skill, tech stack, or title (e.g. LLM, Snowflake, RAG, Python)..."
-              className="w-full pl-12 pr-10 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+              placeholder="Search programs by skill, tech stack, or title (e.g. LLM, RAG, Python)..."
+              className="w-full pl-12 pr-10 py-3.5 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm text-[14px] text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
                 aria-label="Clear search"
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#475569] p-1"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -85,10 +91,10 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none ${
                   selectedCategory === cat
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/25"
-                    : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800"
+                    ? "bg-[#0F172A] text-white shadow-md shadow-slate-900/15"
+                    : "bg-white text-[#475569] hover:bg-slate-50 hover:text-[#0F172A] border border-[#E5E7EB]"
                 }`}
               >
                 {cat}
@@ -99,36 +105,34 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
 
         {/* Empty Search State */}
         {filteredPrograms.length === 0 && (
-          <div className="py-16 text-center flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-xl mx-auto shadow-sm">
-            <Search className="w-12 h-12 text-slate-300 dark:text-slate-600 mb-3" />
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">No matching programs found</h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mt-1 mb-4">
+          <div className="py-16 text-center flex flex-col items-center justify-center bg-white rounded-[24px] border border-[#E5E7EB] max-w-xl mx-auto shadow-sm">
+            <Search className="w-12 h-12 text-slate-300 mb-3" />
+            <h3 className="text-lg font-bold text-[#0F172A]">No matching programs found</h3>
+            <p className="text-sm text-slate-500 max-w-md mt-1 mb-6">
               Try searching for different keywords or reset your category filter. We also design custom enterprise curriculums on demand.
             </p>
             <div className="flex items-center gap-3">
-              <Button
-                variant="outline"
-                size="sm"
+              <button
                 onClick={() => {
                   setSearchQuery("");
                   setSelectedCategory("All");
                 }}
+                className="h-11 px-5 rounded-xl border border-[#E5E7EB] hover:bg-slate-50 text-[#374151] font-semibold text-[13px] transition-colors"
               >
                 Reset Filters
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
+              </button>
+              <button
                 onClick={() => onOpenEnquireModal({ message: "Enquiring for a custom enterprise curriculum." })}
+                className="h-11 px-5 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[13px] transition-all active:scale-[0.98]"
               >
                 Request Custom Curriculum
-              </Button>
+              </button>
             </div>
           </div>
         )}
 
         {/* Program Cards Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <AnimatePresence>
             {filteredPrograms.map((program) => (
               <motion.div
@@ -138,118 +142,112 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
+                className="bg-white border border-[#E5E7EB] rounded-3xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-between group"
               >
-                <Card
-                  variant="elevated"
-                  padding="none"
-                  className="h-full flex flex-col justify-between group hover:shadow-2xl hover:border-blue-300 dark:hover:border-blue-500 transition-all duration-300 bg-white dark:bg-slate-900 dark:border-slate-800 overflow-hidden"
-                >
-                  <div>
-                    {/* Visual Card Image Banner */}
-                    {program.image && (
-                      <div className="relative w-full h-44 overflow-hidden bg-slate-950">
-                        <Image
-                          src={program.image}
-                          alt={program.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          priority={program.id === "gen-ai-enterprise"}
-                          className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-                        />
-                        <div className="absolute inset-0 bg-linear-to-t from-white dark:from-slate-900 via-transparent to-transparent" />
+                <div>
+                  {/* Visual Card Image Banner */}
+                  {program.image && (
+                    <div className="relative w-full h-44 overflow-hidden bg-slate-950">
+                      <Image
+                        src={program.image}
+                        alt={program.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={program.id === "gen-ai-enterprise"}
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                    </div>
+                  )}
+
+                  <div className="p-6 sm:p-7 flex flex-col gap-4">
+                    {/* Header Badges */}
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-600 border border-blue-100">
+                        {program.category}
+                      </span>
+                      {program.featuredBadge && (
+                        <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">
+                          {program.featuredBadge}
+                        </span>
+                      )}
+                    </div>
+
+                    <h3
+                      onClick={() => onSelectProgram(program)}
+                      className="text-[18px] sm:text-[20px] font-bold text-[#0F172A] leading-snug group-hover:text-blue-600 transition-colors cursor-pointer"
+                    >
+                      {program.title}
+                    </h3>
+
+                    <p className="text-[13px] text-[#64748B] leading-[1.65]">
+                      {program.description}
+                    </p>
+
+                    {/* Tech Stack Highlights */}
+                    {program.techStack && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {program.techStack.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-[11px] font-semibold bg-slate-50 text-[#334155] px-2.5 py-0.5 rounded-lg border border-[#E5E7EB]"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {program.techStack.length > 4 && (
+                          <span className="text-[11px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-lg border border-blue-100">
+                            +{program.techStack.length - 4} more
+                          </span>
+                        )}
                       </div>
                     )}
 
-                    <div className="p-6 flex flex-col gap-4">
-                      {/* Header Badges */}
-                      <div className="flex items-center justify-between gap-2">
-                        <Badge variant="primary" size="sm">
-                          {program.category}
-                        </Badge>
-                        {program.featuredBadge && (
-                          <Badge variant="gradient" size="sm">
-                            {program.featuredBadge}
-                          </Badge>
-                        )}
+                    {/* Metadata Specs */}
+                    <div className="flex items-center gap-4 text-[12px] font-semibold text-[#64748B] pt-3.5 border-t border-[#F1F5F9]">
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-blue-600" />
+                        <span>{program.duration}</span>
                       </div>
-
-                      <h3
-                        onClick={() => onSelectProgram(program)}
-                        className="text-xl font-bold text-slate-900 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer"
-                      >
-                        {program.title}
-                      </h3>
-
-                      <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {program.description}
-                      </p>
-
-                      {/* Tech Stack Highlights */}
-                      {program.techStack && (
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {program.techStack.slice(0, 4).map((tech) => (
-                            <span
-                              key={tech}
-                              className="text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-0.5 rounded-md border border-slate-200/80 dark:border-slate-700"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                          {program.techStack.length > 4 && (
-                            <span className="text-[11px] font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 px-2 py-0.5 rounded-md">
-                              +{program.techStack.length - 4} more
-                            </span>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Metadata Specs */}
-                      <div className="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
-                        <div className="flex items-center gap-1.5">
-                          <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                          <span>{program.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <BookOpen className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                          <span>{program.format}</span>
-                        </div>
-                      </div>
-
-                      {/* Key Outcomes Checklist */}
-                      <div className="pt-2 flex flex-col gap-2">
-                        <span className="text-xs uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500">
-                          Key Outcomes:
-                        </span>
-                        {program.keyOutcomes.map((outcome, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                            <span>{outcome}</span>
-                          </div>
-                        ))}
+                      <div className="flex items-center gap-1.5">
+                        <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
+                        <span>{program.format}</span>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Card Footer Actions */}
-                  <div className="px-6 pb-6 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-                    <button
-                      onClick={() => onSelectProgram(program)}
-                      className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center gap-1 group/btn"
-                    >
-                      <Layers className="w-3.5 h-3.5" />
-                      <span>View Syllabus</span>
-                    </button>
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onSelectProgram(program)}
-                      rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
-                    >
-                      Full Details
-                    </Button>
+                    {/* Key Outcomes Checklist */}
+                    <div className="pt-2 flex flex-col gap-2.5">
+                      <span className="text-[11px] uppercase font-bold tracking-wider text-[#94A3B8]">
+                        Key Outcomes:
+                      </span>
+                      {program.keyOutcomes.map((outcome, idx) => (
+                        <div key={idx} className="flex items-start gap-2.5 text-[12px] font-semibold text-[#334155]">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{outcome}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </Card>
+                </div>
+
+                {/* Card Footer Actions */}
+                <div className="px-6 pb-6 pt-4 border-t border-[#F1F5F9] flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => onSelectProgram(program)}
+                    className="text-[12px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1.5 group/btn cursor-pointer"
+                  >
+                    <Layers className="w-4 h-4" />
+                    <span>View Syllabus</span>
+                  </button>
+
+                  <button
+                    onClick={() => onSelectProgram(program)}
+                    className="h-9 px-4 rounded-xl border border-[#E5E7EB] hover:bg-slate-50 text-[#374151] font-bold text-[12px] flex items-center gap-1 transition-all"
+                  >
+                    <span>Full Details</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
