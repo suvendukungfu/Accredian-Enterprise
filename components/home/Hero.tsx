@@ -35,7 +35,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal, onOpenCommandPal
       <Hero3DCanvas />
 
       {/* Ambient Gradient Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-blue-500/10 via-indigo-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-linear-to-b from-blue-500/10 via-indigo-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-1/3 -right-32 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <Container className="relative z-10">
@@ -65,12 +65,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal, onOpenCommandPal
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1]">
                 Next-Gen{" "}
-                <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
                   Expertise
                 </span>{" "}
                 <br />
                 For Your{" "}
-                <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
                   Enterprise
                 </span>
               </h1>
@@ -123,7 +123,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal, onOpenCommandPal
               className="lg:col-span-5 relative flex items-center justify-center z-10"
             >
               {/* Graphic Card Illustration */}
-              <div className="relative w-full aspect-4/3 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 p-5 sm:p-7 text-white shadow-2xl flex flex-col justify-between overflow-hidden border border-blue-500/30">
+              <div className="relative w-full aspect-4/3 rounded-2xl bg-linear-to-br from-slate-900 via-blue-950 to-indigo-950 p-5 sm:p-7 text-white shadow-2xl flex flex-col justify-between overflow-hidden border border-blue-500/30">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-36 h-36 bg-purple-500/10 rounded-full blur-xl pointer-events-none" />
 
