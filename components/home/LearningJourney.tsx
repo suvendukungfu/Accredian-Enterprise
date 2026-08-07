@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Users, PenTool, Award, MessageSquare } from "lucide-react";
+import { Users, PenTool, Award, MessageSquare, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 
 const JOURNEY_STEPS = [
@@ -44,7 +44,11 @@ const fadeUp = {
   }),
 };
 
-export const LearningJourney: React.FC = () => {
+interface LearningJourneyProps {
+  onOpenEnquireModal: (options?: { domain?: string; message?: string }) => void;
+}
+
+export const LearningJourney: React.FC<LearningJourneyProps> = ({ onOpenEnquireModal }) => {
   return (
     <section id="how-it-works" className="py-20 sm:py-28 bg-[#0F172A] text-white relative overflow-hidden">
       {/* Background Orbs */}
@@ -75,41 +79,66 @@ export const LearningJourney: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          {JOURNEY_STEPS.map((step, idx) => (
-            <motion.div
-              key={step.number}
-              custom={idx}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="bg-slate-900/60 border border-slate-800 backdrop-blur-xl p-8 rounded-3xl flex flex-col justify-between hover:border-blue-500/40 transition-all duration-300 group shadow-xl"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-7">
-                  <div className={`w-11 h-11 rounded-xl border flex items-center justify-center group-hover:scale-110 transition-transform duration-200 ${step.iconColor}`}>
-                    {step.icon}
-                  </div>
-                  <span className="w-10 h-10 rounded-full bg-blue-600/15 border border-blue-500/30 text-blue-400 font-bold flex items-center justify-center text-[13px]">
-                    {step.number}
-                  </span>
-                </div>
+        {/* Steps Grid Wrapper with connecting line */}
+        <div className="relative">
+          {/* Connecting dashed line (Desktop Only) */}
+          <div className="hidden md:block absolute top-14 left-[15%] right-[15%] h-px border-t border-dashed border-slate-700/60 z-0 pointer-events-none" />
 
-                <div className="text-[11px] uppercase font-bold tracking-[0.12em] text-blue-400 mb-1.5">
-                  {step.subtitle}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative z-10">
+            {JOURNEY_STEPS.map((step, idx) => (
+              <motion.div
+                key={step.number}
+                custom={idx}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="bg-slate-900/60 border border-slate-800 backdrop-blur-xl p-8 rounded-3xl flex flex-col justify-between hover:border-blue-500/40 transition-all duration-300 group shadow-xl hover:shadow-2xl"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-7">
+                    <div className={`w-11 h-11 rounded-xl border flex items-center justify-center group-hover:scale-110 transition-transform duration-200 ${step.iconColor}`}>
+                      {step.icon}
+                    </div>
+                    <span className="w-10 h-10 rounded-full bg-blue-600/15 border border-blue-500/30 text-blue-400 font-bold flex items-center justify-center text-[13px] group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                      {step.number}
+                    </span>
+                  </div>
+
+                  <div className="text-[11px] uppercase font-bold tracking-[0.12em] text-blue-400 mb-1.5">
+                    {step.subtitle}
+                  </div>
+                  <h3 className="text-[18px] font-bold text-white mb-3 group-hover:text-blue-300 transition-colors leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-[13px] text-slate-400 leading-[1.65]">
+                    {step.description}
+                  </p>
                 </div>
-                <h3 className="text-[18px] font-bold text-white mb-3 group-hover:text-blue-300 transition-colors leading-snug">
-                  {step.title}
-                </h3>
-                <p className="text-[13px] text-slate-400 leading-[1.65]">
-                  {step.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
+
+        {/* Section bottom CTA actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 text-center"
+        >
+          <p className="text-[14px] text-slate-400 font-semibold">
+            Ready to design your bespoke organization-wide cohort?
+          </p>
+          <button
+            onClick={() => onOpenEnquireModal({ message: "Inquiring about diagnostic audits and co-authored curriculum options." })}
+            className="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-white text-[#0F172A] font-bold text-[13px] shadow-lg hover:shadow-xl hover:bg-slate-50 transition-all active:scale-[0.98] group cursor-pointer"
+          >
+            <span>Book Diagnostic Audit</span>
+            <ArrowRight className="w-4 h-4 text-blue-600 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        </motion.div>
       </Container>
     </section>
   );

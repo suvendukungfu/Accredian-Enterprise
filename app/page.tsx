@@ -99,7 +99,7 @@ export default function Home() {
         <CaseStudies onOpenEnquireModal={(options) => openLeadModal(options)} />
 
         {/* 3-Step Learning Journey / How It Works */}
-        <LearningJourney />
+        <LearningJourney onOpenEnquireModal={(options) => openLeadModal(options)} />
 
         {/* Client Testimonials */}
         <Testimonials />
