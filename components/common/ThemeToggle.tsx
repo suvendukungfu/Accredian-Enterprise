@@ -1,17 +1,36 @@
 "use client";
 
-import React from "react";
+import React, { useSyncExternalStore } from "react";
 import { Sun, Moon, Laptop } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
+function emptySubscribe() {
+  return () => {};
+}
+
+function getClientSnapshot() {
+  return true;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
 export const ThemeToggle: React.FC = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const mounted = useSyncExternalStore(emptySubscribe, getClientSnapshot, getServerSnapshot);
 
   const cycleTheme = () => {
     if (theme === "light") setTheme("dark");
     else if (theme === "dark") setTheme("system");
     else setTheme("light");
   };
+
+  if (!mounted) {
+    return (
+      <div className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 animate-pulse" />
+    );
+  }
 
   return (
     <button
