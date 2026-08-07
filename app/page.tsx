@@ -28,6 +28,7 @@ import { CommandPalette } from "@/components/common/CommandPalette";
 import { FloatingCTA } from "@/components/common/FloatingCTA";
 import { ReadingProgress } from "@/components/common/ReadingProgress";
 import { BackToTop } from "@/components/common/BackToTop";
+import { motion } from "framer-motion";
 import { useApp } from "@/app/providers";
 import { ExecutiveProgram } from "@/types/program";
 
@@ -47,7 +48,42 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAFBFD] text-[#0F172A] antialiased transition-colors">
+    <div className="flex flex-col min-h-screen bg-[#FAFBFD] text-[#0F172A] antialiased transition-colors relative overflow-hidden">
+      {/* Global FAANG-level Ambient Background Grid & Volumetric Lights */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Delicate dotted grid overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.2px,transparent_1.2px)] [background-size:48px_48px] opacity-45" />
+        
+        {/* Soft breathing lighting blobs */}
+        <motion.div
+          animate={{
+            x: [0, 45, -25, 0],
+            y: [0, -55, 35, 0],
+            scale: [1, 1.12, 0.92, 1]
+          }}
+          transition={{ repeat: Infinity, duration: 24, ease: "easeInOut" }}
+          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-blue-100/30 blur-[130px]"
+        />
+        <motion.div
+          animate={{
+            x: [0, -35, 45, 0],
+            y: [0, 45, -35, 0],
+            scale: [1, 0.92, 1.08, 1]
+          }}
+          transition={{ repeat: Infinity, duration: 28, ease: "easeInOut", delay: 2 }}
+          className="absolute top-[35%] -left-40 w-[550px] h-[550px] rounded-full bg-indigo-100/25 blur-[125px]"
+        />
+        <motion.div
+          animate={{
+            x: [0, 50, -30, 0],
+            y: [0, 30, -40, 0],
+            scale: [1, 1.08, 0.9, 1]
+          }}
+          transition={{ repeat: Infinity, duration: 32, ease: "easeInOut", delay: 4 }}
+          className="absolute -bottom-40 right-20 w-[600px] h-[600px] rounded-full bg-violet-100/20 blur-[140px]"
+        />
+      </div>
+
       {/* Top Reading Scroll Progress Indicator */}
       <ReadingProgress />
 
