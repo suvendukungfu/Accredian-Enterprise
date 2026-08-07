@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Users, CheckCircle2, ArrowRight, BookOpen, Search, X, Layers } from "lucide-react";
+import { Clock, CheckCircle2, ArrowRight, BookOpen, Search, X, Layers } from "lucide-react";
 import { PROGRAMS_DATA } from "@/constants/programsData";
 import { ExecutiveProgram, ProgramCategory } from "@/types/program";
 import { Container } from "@/components/ui/Container";
@@ -104,16 +104,25 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
             <p className="text-sm text-slate-500 max-w-md mt-1 mb-4">
               Try searching for different keywords or reset your category filter. We also design custom enterprise curriculums on demand.
             </p>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("All");
-              }}
-            >
-              Reset Filters
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedCategory("All");
+                }}
+              >
+                Reset Filters
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => onOpenEnquireModal({ message: "Enquiring for a custom enterprise curriculum." })}
+              >
+                Request Custom Curriculum
+              </Button>
+            </div>
           </div>
         )}
 

@@ -7,7 +7,6 @@ import {
   TrendingUp,
   CheckCircle2,
   Quote,
-  ArrowRight,
   ShieldCheck,
   FileText,
 } from "lucide-react";
@@ -15,7 +14,6 @@ import { CASE_STUDIES_DATA } from "@/constants/caseStudiesData";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 
 interface CaseStudiesProps {
   onOpenEnquireModal: (options?: { domain?: string; message?: string }) => void;

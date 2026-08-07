@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { Check, X, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/common/SectionHeading";
@@ -80,7 +79,7 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({ onOpenEnquir
         />
 
         <div className="overflow-x-auto rounded-3xl border border-slate-200 shadow-xl bg-white">
-          <table className="w-full text-left border-collapse min-w-[700px]">
+          <table className="w-full text-left border-collapse min-w-175">
             <thead>
               <tr className="bg-slate-900 text-white border-b border-slate-800">
                 <th className="py-5 px-6 text-sm font-bold w-2/5">Capability Metric</th>
@@ -112,7 +111,7 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({ onOpenEnquir
                   <td className="py-4 px-6 bg-blue-50/60 font-bold text-blue-900 border-x border-blue-100">
                     {typeof row.accredian === "boolean" ? (
                       <div className="flex items-center gap-1.5 text-emerald-700">
-                        <Check className="w-5 h-5 text-emerald-600 shrink-0 stroke-[3]" />
+                        <Check className="w-5 h-5 text-emerald-600 shrink-0 stroke-3" />
                         <span>Included</span>
                       </div>
                     ) : (

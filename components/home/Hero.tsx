@@ -133,7 +133,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
                 </div>
 
                 {/* Dashboard Mockup Content Switcher */}
-                <div className="my-auto py-4 z-10 min-h-[160px] flex flex-col justify-center">
+                <div className="my-auto py-4 z-10 min-h-40 flex flex-col justify-center">
                   <AnimatePresence mode="wait">
                     {activeDashboardTab === "growth" && (
                       <motion.div

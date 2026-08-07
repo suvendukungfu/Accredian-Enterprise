@@ -7,6 +7,7 @@ import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { useLeadForm } from "@/hooks/useLeadForm";
 import { useApp } from "@/app/providers";
+import { LeadFormData } from "@/lib/zod";
 import { User, Mail, Phone, Building2, Briefcase, Send, AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface LeadFormModalProps {
@@ -59,7 +60,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
   useEffect(() => {
     if (isOpen && leadModalOptions) {
       if (leadModalOptions.domain) {
-        setValue("domain", leadModalOptions.domain as any);
+        setValue("domain", leadModalOptions.domain as LeadFormData["domain"]);
       }
       if (leadModalOptions.message) {
         setValue("message", leadModalOptions.message);

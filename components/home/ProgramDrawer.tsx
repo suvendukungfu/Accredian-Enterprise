@@ -170,7 +170,7 @@ export const ProgramDrawer: React.FC<ProgramDrawerProps> = ({
                 {activeTab === "modules" && (
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-base font-bold text-slate-900 uppercase tracking-wider text-xs">
+                      <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                         Curriculum Breakdown & Weekly Modules
                       </h3>
                       <span className="text-xs font-semibold text-slate-500">
