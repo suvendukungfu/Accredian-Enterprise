@@ -9,11 +9,9 @@ import {
   Users,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/common/SectionHeading";
-import { Button } from "@/components/ui/Button";
 
 interface ROICalculatorProps {
   onOpenEnquireModal: (options?: { domain?: string; message?: string }) => void;
@@ -54,201 +52,187 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
 
   const domainConfig = DOMAIN_MULTIPLIERS[selectedDomain] || DOMAIN_MULTIPLIERS["Generative AI"];
 
-  // Annual working hours assumed per employee = 2000
   const hourlyRate = avgSalary / 2000;
   const totalHoursSaved = teamSize * domainConfig.hoursSaved;
   const grossFinancialSavings = totalHoursSaved * hourlyRate;
-  // Estimated Accredian Enterprise investment assumption (~$1,200 per seat per year)
-  const estimatedCost = teamSize * 1200;
-  const netFinancialImpact = Math.max(0, grossFinancialSavings - estimatedCost);
-  const roiMultiple = ((grossFinancialSavings / (estimatedCost || 1))).toFixed(1);
+  const estimatedTrainingInvestment = teamSize * 1800;
+  const netROI = Math.max(0, Math.round(((grossFinancialSavings - estimatedTrainingInvestment) / estimatedTrainingInvestment) * 100));
 
   return (
-    <section id="roi-calculator" className="py-20 sm:py-28 bg-slate-900 text-white relative overflow-hidden">
-      {/* Background Orbs */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 -right-32 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="roi-calculator" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
       <Container>
-        <SectionHeading
-          badgeText="Enterprise Business Case"
-          title="Calculate Your Organization's"
-          highlightText="Capability ROI"
-          subtitle="Estimate the quantifiable productivity gains, hours saved, and financial impact of upskilling your workforce with Accredian."
-          light
-        />
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
+            <Calculator className="w-3.5 h-3.5 text-blue-600" />
+            <span>Interactive Enterprise ROI Model</span>
+          </span>
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
+            Calculate Your Organization&apos;s{" "}
+            <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Skill ROI
+            </span>
+          </h2>
+          <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
+            Model projected annual productivity gains, engineering hours saved, and financial ROI across enterprise cohorts.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Controls Form Column */}
-          <div className="lg:col-span-7 bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 backdrop-blur-xl flex flex-col justify-between shadow-2xl">
-            <div className="space-y-8">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-700/60">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
-                  <Calculator className="w-5 h-5" />
-                </div>
+        {/* Calculator Main Card */}
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+              {/* Left Column Controls */}
+              <div className="lg:col-span-6 flex flex-col gap-6">
                 <div>
-                  <h3 className="text-lg font-bold text-white">Workforce Parameters</h3>
-                  <p className="text-xs text-slate-400">Adjust the parameters to mirror your team composition</p>
-                </div>
-              </div>
-
-              {/* Domain Selection Buttons */}
-              <div className="space-y-2.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  Select Target Capability Domain:
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {Object.keys(DOMAIN_MULTIPLIERS).map((domain) => (
-                    <button
-                      key={domain}
-                      type="button"
-                      onClick={() => setSelectedDomain(domain)}
-                      className={`p-3 rounded-xl text-xs font-bold transition-all text-left border ${
-                        selectedDomain === domain
-                          ? "bg-blue-600 text-white border-blue-400 shadow-md shadow-blue-600/30"
-                          : "bg-slate-900/60 text-slate-300 border-slate-700 hover:border-slate-500 hover:bg-slate-800"
-                      }`}
-                    >
-                      {domain}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Team Size Slider */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <label htmlFor={teamSizeId} className="font-bold text-slate-200 flex items-center gap-2">
-                    <Users className="w-4 h-4 text-blue-400" />
-                    <span>Number of Employees To Upskill:</span>
+                  <label className="text-[12px] font-bold text-[#94A3B8] uppercase tracking-wider block mb-2">
+                    Select Capability Domain
                   </label>
-                  <span className="text-lg font-black text-blue-400 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
-                    {teamSize} Seats
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {Object.keys(DOMAIN_MULTIPLIERS).map((domain) => (
+                      <button
+                        key={domain}
+                        onClick={() => setSelectedDomain(domain)}
+                        className={`px-3.5 py-2.5 rounded-xl text-[12px] font-bold transition-all duration-200 border text-left ${
+                          selectedDomain === domain
+                            ? "bg-[#0F172A] text-white border-[#0F172A] shadow-sm"
+                            : "bg-white text-[#475569] border-[#E5E7EB] hover:bg-slate-50"
+                        }`}
+                      >
+                        {domain}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Team Size Slider */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <label htmlFor={teamSizeId} className="text-[14px] font-medium text-[#374151] flex items-center gap-2">
+                      <Users className="w-4 h-4 text-blue-600" />
+                      <span>Cohort Team Size</span>
+                    </label>
+                    <span className="text-[14px] font-bold text-[#0F172A]">{teamSize} Employees</span>
+                  </div>
+                  <input
+                    id={teamSizeId}
+                    type="range"
+                    min="10"
+                    max="500"
+                    step="5"
+                    value={teamSize}
+                    onChange={(e) => setTeamSize(Number(e.target.value))}
+                    aria-label="Cohort team size slider"
+                  />
+                  <div className="flex justify-between text-[11px] text-[#94A3B8] font-semibold">
+                    <span>10 Pilot</span>
+                    <span>250 Division</span>
+                    <span>500+ Global</span>
+                  </div>
+                </div>
+
+                {/* Avg Salary Slider */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <label htmlFor={avgSalaryId} className="text-[14px] font-medium text-[#374151] flex items-center gap-2">
+                      <DollarSign className="w-4 h-4 text-emerald-600" />
+                      <span>Avg Annual Salary</span>
+                    </label>
+                    <span className="text-[14px] font-bold text-[#0F172A]">${avgSalary.toLocaleString()} USD</span>
+                  </div>
+                  <input
+                    id={avgSalaryId}
+                    type="range"
+                    min="50000"
+                    max="250000"
+                    step="5000"
+                    value={avgSalary}
+                    onChange={(e) => setAvgSalary(Number(e.target.value))}
+                    aria-label="Average annual salary slider"
+                  />
+                  <div className="flex justify-between text-[11px] text-[#94A3B8] font-semibold">
+                    <span>$50k</span>
+                    <span>$150k</span>
+                    <span>$250k+</span>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-50 border border-[#E5E7EB] text-[12px] text-[#64748B] flex items-start gap-2.5">
+                  <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                  <span>
+                    Projections are calculated based on benchmarked productivity data across 100+ enterprise cohorts.
                   </span>
                 </div>
-                <input
-                  id={teamSizeId}
-                  type="range"
-                  min={10}
-                  max={500}
-                  step={5}
-                  value={teamSize}
-                  onChange={(e) => setTeamSize(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                />
-                <div className="flex justify-between text-[11px] text-slate-400 font-semibold">
-                  <span>10 Cohort</span>
-                  <span>100 Mid-Size</span>
-                  <span>500 Enterprise</span>
-                </div>
               </div>
 
-              {/* Average Salary Slider */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <label htmlFor={avgSalaryId} className="font-bold text-slate-200 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-emerald-400" />
-                    <span>Average Annual Compensation / Employee:</span>
-                  </label>
-                  <span className="text-lg font-black text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20">
-                    ${avgSalary.toLocaleString()}/yr
+              {/* Right Column Financial ROI Summary */}
+              <div className="lg:col-span-6 flex flex-col justify-between gap-6 bg-[#FAFBFD] border border-[#E5E7EB] rounded-2xl p-6 sm:p-8">
+                <div className="flex flex-col gap-5">
+                  <span className="text-[11px] font-bold text-blue-600 uppercase tracking-widest">
+                    Projected Annual Outcomes
                   </span>
-                </div>
-                <input
-                  id={avgSalaryId}
-                  type="range"
-                  min={50000}
-                  max={250000}
-                  step={5000}
-                  value={avgSalary}
-                  onChange={(e) => setAvgSalary(Number(e.target.value))}
-                  className="w-full h-2.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-                />
-                <div className="flex justify-between text-[11px] text-slate-400 font-semibold">
-                  <span>$50k</span>
-                  <span>$150k</span>
-                  <span>$250k+</span>
-                </div>
-              </div>
-            </div>
 
-            <div className="pt-6 border-t border-slate-700/60 mt-8 text-xs text-slate-400 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Based on benchmark enterprise outcome metrics across 50+ corporate cohorts.</span>
-            </div>
-          </div>
-
-          {/* Results Output Column */}
-          <div className="lg:col-span-5 bg-linear-to-br from-blue-900/90 via-indigo-900/80 to-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-blue-400/10 rounded-full blur-2xl pointer-events-none" />
-
-            <div className="space-y-6 relative z-10">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <span className="text-xs uppercase font-bold tracking-widest text-blue-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-                  Estimated Impact Summary
-                </span>
-                <span className="text-xs font-bold bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-full border border-emerald-500/30">
-                  {roiMultiple}x Projected ROI
-                </span>
-              </div>
-
-              {/* Big Financial Result Card */}
-              <div className="bg-white/10 p-5 rounded-2xl border border-white/10 backdrop-blur-md space-y-1">
-                <span className="text-xs text-blue-200 font-medium">Estimated Gross Financial Value / Yr</span>
-                <div className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                  ${Math.round(grossFinancialSavings).toLocaleString()}
-                </div>
-                <p className="text-[11px] text-emerald-300 font-semibold pt-1">
-                  Net Financial Uplift: +${Math.round(netFinancialImpact).toLocaleString()}
-                </p>
-              </div>
-
-              {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-md flex flex-col gap-1">
-                  <div className="flex items-center gap-1.5 text-blue-200 text-xs font-semibold">
-                    <Clock className="w-3.5 h-3.5 text-blue-400" />
-                    <span>Total Hours Saved</span>
+                  <div>
+                    <span className="text-[12px] font-semibold text-[#64748B] block">
+                      Estimated Financial Productivity Savings
+                    </span>
+                    <span className="text-[36px] sm:text-[44px] font-extrabold text-[#0F172A] tracking-tight leading-none block mt-1">
+                      ${Math.round(grossFinancialSavings).toLocaleString()}
+                    </span>
                   </div>
-                  <div className="text-2xl font-bold text-white">
-                    {totalHoursSaved.toLocaleString()} hrs
+
+                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#E5E7EB]">
+                    <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB]">
+                      <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-[16px]">
+                        <TrendingUp className="w-4 h-4" />
+                        <span>+{domainConfig.prodBoost}%</span>
+                      </div>
+                      <span className="text-[11px] font-semibold text-[#64748B] mt-0.5 block">
+                        Productivity Boost
+                      </span>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB]">
+                      <div className="flex items-center gap-1.5 text-blue-600 font-bold text-[16px]">
+                        <Clock className="w-4 h-4" />
+                        <span>{totalHoursSaved.toLocaleString()} hrs</span>
+                      </div>
+                      <span className="text-[11px] font-semibold text-[#64748B] mt-0.5 block">
+                        Annual Hours Saved
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-[10px] text-slate-300">~{domainConfig.hoursSaved} hrs / employee</span>
+
+                  <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-between">
+                    <span className="text-[13px] font-bold text-emerald-900">Projected Net ROI</span>
+                    <span className="text-[20px] font-extrabold text-emerald-700">+{netROI}% ROI</span>
+                  </div>
+
+                  <div className="flex flex-col gap-2 pt-1 text-[12px] font-medium text-[#475569]">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>Custom Capstone ROI Assessment included</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>1-on-1 Executive Skill Gap Audit</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-md flex flex-col gap-1">
-                  <div className="flex items-center gap-1.5 text-emerald-200 text-xs font-semibold">
-                    <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Productivity Boost</span>
-                  </div>
-                  <div className="text-2xl font-bold text-emerald-300">
-                    +{domainConfig.prodBoost}%
-                  </div>
-                  <span className="text-[10px] text-slate-300">Workflow efficiency</span>
-                </div>
+                <button
+                  onClick={() =>
+                    onOpenEnquireModal({
+                      domain: selectedDomain,
+                      message: `Requesting ROI audit for team of ${teamSize} employees in ${selectedDomain}.`,
+                    })
+                  }
+                  className="w-full h-[56px] rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[15px] inline-flex items-center justify-center gap-2 transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
+                >
+                  <span>Book Custom ROI Audit</span>
+                  <ArrowRight className="w-4.5 h-4.5" />
+                </button>
               </div>
-            </div>
-
-            {/* CTA Box */}
-            <div className="pt-6 mt-6 border-t border-white/10 relative z-10 space-y-3">
-              <Button
-                variant="gradient"
-                size="lg"
-                onClick={() =>
-                  onOpenEnquireModal({
-                    domain: selectedDomain,
-                    message: `Requested ROI Audit for a team of ${teamSize} seats in ${selectedDomain}. Estimated ROI: ${roiMultiple}x ($${Math.round(grossFinancialSavings).toLocaleString()}/yr).`,
-                  })
-                }
-                rightIcon={<ArrowRight className="w-4 h-4" />}
-                className="w-full justify-center shadow-xl"
-              >
-                Schedule Custom ROI Audit
-              </Button>
-              <p className="text-[11px] text-center text-blue-200">
-                Receive a detailed customized ROI report for your executive board presentation.
-              </p>
             </div>
           </div>
         </div>

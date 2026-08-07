@@ -4,16 +4,13 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Building2,
-  TrendingUp,
   CheckCircle2,
   Quote,
   ShieldCheck,
-  FileText,
+  ArrowRight,
 } from "lucide-react";
 import { CASE_STUDIES_DATA } from "@/constants/caseStudiesData";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/common/SectionHeading";
-import { Card } from "@/components/ui/Card";
 
 interface CaseStudiesProps {
   onOpenEnquireModal: (options?: { domain?: string; message?: string }) => void;
@@ -24,159 +21,149 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onOpenEnquireModal }) 
   const activeCase = CASE_STUDIES_DATA[activeIdx];
 
   return (
-    <section id="case-studies" className="py-20 sm:py-28 bg-slate-50/70 border-y border-slate-200/60">
+    <section id="case-studies" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
       <Container>
-        <SectionHeading
-          badgeText="Verified Outcomes"
-          title="Enterprise Success"
-          highlightText="Case Studies"
-          subtitle="Explore how industry giants transformed their engineering and leadership capabilities with Accredian."
-        />
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-12"
+        >
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Verified Enterprise Outcomes</span>
+          </span>
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
+            Enterprise Success{" "}
+            <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Case Studies
+            </span>
+          </h2>
+          <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
+            Explore how industry leaders transformed their engineering and leadership capabilities with Accredian.
+          </p>
 
-        {/* Company Selector Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-          {CASE_STUDIES_DATA.map((item, idx) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveIdx(idx)}
-              className={`px-5 py-2.5 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-2 ${
-                activeIdx === idx
-                  ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105"
-                  : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
-              }`}
-            >
-              <Building2 className="w-4 h-4 text-blue-500" />
-              <span>{item.clientName}</span>
-            </button>
-          ))}
-        </div>
+          {/* Company Selector Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
+            {CASE_STUDIES_DATA.map((item, idx) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveIdx(idx)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none ${
+                  activeIdx === idx
+                    ? "bg-[#0F172A] text-white shadow-md shadow-slate-900/15 scale-[1.02]"
+                    : "bg-white text-[#475569] hover:bg-slate-50 hover:text-[#0F172A] border border-[#E5E7EB]"
+                }`}
+              >
+                <Building2 className="w-3.5 h-3.5 text-blue-500" />
+                <span>{item.clientName}</span>
+              </button>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Active Case Study Detail Card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCase.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card
-              variant="elevated"
-              padding="lg"
-              className="bg-white border-slate-200 shadow-2xl p-6 sm:p-10"
+        <div className="max-w-5xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCase.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300"
             >
-              {/* Header Info */}
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-slate-100">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white font-black text-xl flex items-center justify-center shadow-md shadow-blue-600/30">
-                      {activeCase.logoInitial}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                {/* Left Overview & Results */}
+                <div className="lg:col-span-7 flex flex-col justify-between gap-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px] font-bold border border-blue-100">
+                        {activeCase.industry}
+                      </span>
+                      <span className="text-[12px] font-semibold text-[#64748B]">
+                        Scope: {activeCase.companySize}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                        {activeCase.clientName}
-                      </h3>
-                      <div className="flex items-center gap-3 text-xs font-semibold text-slate-500">
-                        <span>{activeCase.industry}</span>
-                        <span>•</span>
-                        <span>{activeCase.companySize}</span>
+
+                    <h3 className="text-[24px] sm:text-[28px] font-bold text-[#0F172A] tracking-[-0.02em] leading-tight">
+                      {activeCase.headline}
+                    </h3>
+
+                    <p className="text-[14px] text-[#64748B] leading-[1.7] mt-3">
+                      {activeCase.challenge}
+                    </p>
+                  </div>
+
+                  {/* Highlights Checklist */}
+                  <div className="flex flex-col gap-2.5 pt-2 border-t border-[#F1F5F9]">
+                    <h4 className="text-[12px] uppercase font-bold tracking-wider text-[#94A3B8]">
+                      Key Solution Delivery
+                    </h4>
+                    {activeCase.results.map((res) => (
+                      <div key={res} className="flex items-center gap-2.5 text-[13px] font-semibold text-[#334155]">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                        <span>{res}</span>
                       </div>
+                    ))}
+                  </div>
+
+                  {/* Action CTA Button */}
+                  <div className="pt-2">
+                    <button
+                      onClick={() =>
+                        onOpenEnquireModal({
+                          domain: activeCase.clientName,
+                          message: `Requesting full case study PDF for ${activeCase.clientName}.`,
+                        })
+                      }
+                      className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[14px] transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
+                    >
+                      <span>Read Full {activeCase.clientName} Study</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Right Impact Metrics & Executive Quote */}
+                <div className="lg:col-span-5 flex flex-col justify-between gap-6 bg-[#FAFBFD] border border-[#E5E7EB] rounded-2xl p-6 sm:p-8">
+                  {/* Executive Quote */}
+                  <div className="relative">
+                    <Quote className="w-8 h-8 text-blue-100 absolute -top-2 -left-2" />
+                    <p className="text-[14px] text-[#334155] font-medium leading-[1.7] italic relative z-10">
+                      &quot;{activeCase.quote.text}&quot;
+                    </p>
+                    <div className="mt-4 pt-3 border-t border-[#E5E7EB]">
+                      <h4 className="text-[13px] font-bold text-[#0F172A]">
+                        {activeCase.quote.author}
+                      </h4>
+                      <p className="text-[11px] font-semibold text-[#64748B]">
+                        {activeCase.quote.title}
+                      </p>
                     </div>
                   </div>
 
-                  <p className="text-lg font-bold text-blue-600 pt-2">
-                    {activeCase.headline}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 shrink-0">
-                  <button
-                    onClick={() =>
-                      onOpenEnquireModal({
-                        message: `Requesting full detailed Case Study PDF for ${activeCase.clientName}.`,
-                      })
-                    }
-                    className="px-4 py-2.5 rounded-xl border border-slate-300 hover:border-blue-600 bg-slate-50 text-slate-700 text-xs font-bold flex items-center gap-2 hover:bg-white hover:text-blue-600 transition-colors"
-                  >
-                    <FileText className="w-4 h-4" />
-                    <span>Download Case Study PDF</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Metrics Highlights Bar */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-8">
-                {activeCase.metrics.map((metric, mIdx) => (
-                  <div
-                    key={mIdx}
-                    className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-4"
-                  >
-                    <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-600">
-                      <TrendingUp className="w-6 h-6" />
+                  {/* Impact Stat Badge */}
+                  <div className="p-4 rounded-xl bg-white border border-[#E5E7EB] flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-[14px]">
+                      {activeCase.metrics[0]?.value || "42%"}
                     </div>
                     <div>
-                      <div className="text-2xl font-black text-slate-900">{metric.value}</div>
-                      <div className="text-xs font-bold text-slate-700">{metric.label}</div>
-                      <div className="text-[11px] text-slate-500">{metric.sublabel}</div>
+                      <h5 className="text-[13px] font-bold text-[#0F172A]">
+                        {activeCase.metrics[0]?.label || "Productivity Impact"}
+                      </h5>
+                      <p className="text-[11px] font-semibold text-emerald-600">
+                        {activeCase.metrics[0]?.sublabel || "Verified Metric"}
+                      </p>
                     </div>
                   </div>
-                ))}
-              </div>
-
-              {/* Challenge vs Solution Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-6 border-t border-slate-100">
-                <div className="space-y-3">
-                  <h4 className="text-xs uppercase font-bold text-slate-400 tracking-wider">
-                    The Challenge
-                  </h4>
-                  <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                    {activeCase.challenge}
-                  </p>
-                </div>
-
-                <div className="space-y-3">
-                  <h4 className="text-xs uppercase font-bold text-blue-600 tracking-wider">
-                    The Accredian Solution
-                  </h4>
-                  <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                    {activeCase.solution}
-                  </p>
                 </div>
               </div>
-
-              {/* Measured Results List */}
-              <div className="pt-6 border-t border-slate-100 space-y-3">
-                <h4 className="text-xs uppercase font-bold text-emerald-600 tracking-wider flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Key Verified Results</span>
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {activeCase.results.map((res, rIdx) => (
-                    <div
-                      key={rIdx}
-                      className="flex items-start gap-2 text-xs font-semibold text-slate-800 bg-emerald-50/50 border border-emerald-200/60 p-3 rounded-xl"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{res}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quote Block */}
-              <div className="mt-8 p-6 rounded-2xl bg-slate-900 text-white relative flex flex-col gap-4">
-                <Quote className="w-8 h-8 text-blue-500/40 absolute top-4 right-4" />
-                <p className="text-sm sm:text-base italic text-slate-200 pr-8">
-                  &quot;{activeCase.quote.text}&quot;
-                </p>
-                <div>
-                  <div className="text-sm font-bold text-white">{activeCase.quote.author}</div>
-                  <div className="text-xs text-blue-300">{activeCase.quote.title}</div>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </Container>
     </section>
   );

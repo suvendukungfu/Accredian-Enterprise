@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, Stethoscope, Cpu, Factory, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Building2, Stethoscope, Cpu, Factory, ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/common/SectionHeading";
-import { Button } from "@/components/ui/Button";
 
 interface IndustryTab {
   id: string;
@@ -25,7 +23,7 @@ const INDUSTRIES: IndustryTab[] = [
   {
     id: "it-software",
     label: "IT & Software",
-    icon: <Cpu className="w-5 h-5" />,
+    icon: <Cpu className="w-4 h-4" />,
     title: "Software Engineering & Cloud Scale",
     subtitle: "Accelerating DevSecOps, Microservices, and GenAI Tooling",
     description:
@@ -42,8 +40,8 @@ const INDUSTRIES: IndustryTab[] = [
   },
   {
     id: "banking-finance",
-    label: "Banking & Financial Services",
-    icon: <Building2 className="w-5 h-5" />,
+    label: "Banking & Finance",
+    icon: <Building2 className="w-4 h-4" />,
     title: "Fintech & Algorithmic Intelligence",
     subtitle: "SOC-2 & FINRA Compliant RAG Pipelines",
     description:
@@ -59,144 +57,157 @@ const INDUSTRIES: IndustryTab[] = [
     ],
   },
   {
-    id: "healthcare",
-    label: "Healthcare & Lifesciences",
-    icon: <Stethoscope className="w-5 h-5" />,
-    title: "Clinical Data Science & Governance",
-    subtitle: "HIPAA Compliant Analytics & Predictive Modeling",
+    id: "healthcare-lifesciences",
+    label: "Healthcare & Life Sciences",
+    icon: <Stethoscope className="w-4 h-4" />,
+    title: "Clinical NLP & Genomic Data Science",
+    subtitle: "HIPAA Compliant Medical Intelligence Systems",
     description:
-      "Consolidate fragmented patient records and clinical trial datasets into unified Snowflake/Databricks lakehouses to accelerate drug discovery pipelines.",
+      "Train clinical research cohorts to leverage deep learning for accelerated drug discovery pipelines, automated EHR synthesis, and HIPAA-compliant patient diagnostics.",
     highlights: [
-      "HIPAA-compliant data governance",
-      "Reduced cloud query costs by $3.8M",
-      "Promoted 85 internal data analysts",
+      "HIPAA & GDPR data isolation",
+      "Automated medical literature retrieval",
+      "Accelerated trial screening by 65%",
     ],
     metrics: [
-      { label: "Query Latency", value: "-65%" },
-      { label: "Cloud Savings", value: "$3.8M" },
+      { label: "Trial Screening", value: "+65%" },
+      { label: "Analysts Upskilled", value: "8,500+" },
     ],
   },
   {
-    id: "manufacturing",
-    label: "Manufacturing & Industrial",
-    icon: <Factory className="w-5 h-5" />,
-    title: "Industrial IoT & Predictive Maintenance",
-    subtitle: "Smart Factory Automation & Supply Chain AI",
+    id: "manufacturing-logistics",
+    label: "Manufacturing & Logistics",
+    icon: <Factory className="w-4 h-4" />,
+    title: "Predictive Maintenance & Supply Chain AI",
+    subtitle: "Real-Time Sensor Analytics & IoT Control Towers",
     description:
-      "Train plant managers and industrial engineers in predictive equipment failure modeling, supply chain routing optimization, and digital twin analytics.",
+      "Transform plant management and supply chain operations through predictive maintenance machine learning models, reduced downtime, and inventory forecasting.",
     highlights: [
       "Reduced unplanned downtime by 38%",
-      "Real-time sensor anomaly detection",
-      "Optimized inventory turnover velocity",
+      "Automated IoT sensor telemetry",
+      "Optimized fleet routing efficiency",
     ],
     metrics: [
-      { label: "Downtime Cut", value: "38%" },
-      { label: "Factories Scaled", value: "45+" },
+      { label: "Downtime Reduction", value: "-38%" },
+      { label: "Plants Transformed", value: "120+" },
     ],
   },
 ];
 
-interface UseCasesProps {
-  onOpenEnquireModal?: (options?: { domain?: string; message?: string }) => void;
+interface UseCasesSectionProps {
+  onOpenEnquireModal: (options?: { domain?: string; message?: string }) => void;
 }
 
-export const UseCasesSection: React.FC<UseCasesProps> = ({ onOpenEnquireModal }) => {
-  const [activeTabId, setActiveTabId] = useState<string>("it-software");
+export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onOpenEnquireModal }) => {
+  const [activeTab, setActiveTab] = useState<string>("it-software");
 
-  const activeTab = INDUSTRIES.find((tab) => tab.id === activeTabId) || INDUSTRIES[0];
+  const currentIndustry = INDUSTRIES.find((ind) => ind.id === activeTab) || INDUSTRIES[0];
 
   return (
-    <section id="use-cases" className="py-20 sm:py-28 bg-white dark:bg-slate-950 transition-colors">
+    <section id="use-cases" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors">
       <Container>
-        <SectionHeading
-          badgeText="Sectors Served"
-          title="Tailored Solutions for"
-          highlightText="Every Industry"
-          subtitle="Discover how Accredian Enterprise customized curriculums address unique technical and compliance challenges across key global sectors."
-        />
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-12"
+        >
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Tailored Industry Blueprints</span>
+          </span>
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
+            Domain-Specific{" "}
+            <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Transformation
+            </span>
+          </h2>
+          <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
+            Customized enterprise capability tracks engineered for complex compliance, regulatory, and technical requirements.
+          </p>
 
-        {/* Tab Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-          {INDUSTRIES.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTabId(tab.id)}
-              className={`px-5 py-3 rounded-2xl font-bold text-sm flex items-center gap-2.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                activeTabId === tab.id
-                  ? "bg-blue-600 text-white shadow-xl shadow-blue-600/30 scale-105"
-                  : "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800"
-              }`}
-            >
-              {tab.icon}
-              <span>{tab.label}</span>
-            </button>
-          ))}
-        </div>
+          {/* Industry Tab Selectors */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
+            {INDUSTRIES.map((ind) => (
+              <button
+                key={ind.id}
+                onClick={() => setActiveTab(ind.id)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none ${
+                  activeTab === ind.id
+                    ? "bg-[#0F172A] text-white shadow-md shadow-slate-900/15 scale-[1.02]"
+                    : "bg-white text-[#475569] hover:bg-slate-50 hover:text-[#0F172A] border border-[#E5E7EB]"
+                }`}
+              >
+                {ind.icon}
+                <span>{ind.label}</span>
+              </button>
+            ))}
+          </div>
+        </motion.div>
 
-        {/* Tab Content Display Card */}
-        <div className="max-w-5xl mx-auto">
+        {/* Selected Sector Card Details */}
+        <div className="max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeTab.id}
-              initial={{ opacity: 0, y: 20 }}
+              key={currentIndustry.id}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.3 }}
-              className="bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+              className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300"
             >
-              {/* Left Details */}
-              <div className="lg:col-span-7 flex flex-col items-start gap-4">
-                <span className="text-xs uppercase font-bold tracking-widest text-blue-600 dark:text-blue-400">
-                  {activeTab.subtitle}
-                </span>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-7 flex flex-col gap-5">
+                  <div>
+                    <span className="text-[11px] uppercase font-bold tracking-wider text-blue-600">
+                      {currentIndustry.subtitle}
+                    </span>
+                    <h3 className="text-[24px] sm:text-[28px] font-bold text-[#0F172A] tracking-[-0.02em] leading-tight mt-1">
+                      {currentIndustry.title}
+                    </h3>
+                  </div>
 
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                  {activeTab.title}
-                </h3>
+                  <p className="text-[14px] text-[#64748B] leading-[1.7]">
+                    {currentIndustry.description}
+                  </p>
 
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {activeTab.description}
-                </p>
+                  <div className="flex flex-col gap-2.5 pt-2">
+                    {currentIndustry.highlights.map((item) => (
+                      <div key={item} className="flex items-center gap-2.5 text-[13px] font-medium text-[#334155]">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
 
-                <div className="flex flex-col gap-2.5 pt-2 w-full">
-                  {activeTab.highlights.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-slate-800 dark:text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  <div className="pt-4">
+                    <button
+                      onClick={() =>
+                        onOpenEnquireModal({
+                          domain: currentIndustry.label,
+                          message: `Requesting enterprise blueprint for ${currentIndustry.label}.`,
+                        })
+                      }
+                      className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[14px] transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
+                    >
+                      <span>Download {currentIndustry.label} Blueprint</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="pt-4">
-                  <Button
-                    variant="gradient"
-                    size="md"
-                    onClick={() =>
-                      onOpenEnquireModal?.({
-                        domain: activeTab.label,
-                        message: `Enquiring for custom ${activeTab.label} enterprise solution.`,
-                      })
-                    }
-                    rightIcon={<ArrowRight className="w-4 h-4" />}
-                  >
-                    Request {activeTab.label} Blueprint
-                  </Button>
-                </div>
-              </div>
-
-              {/* Right Metrics Stat Display */}
-              <div className="lg:col-span-5 flex flex-col gap-4 bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-lg">
-                <h4 className="text-xs uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-900 pb-3">
-                  Verified Industry Impact
-                </h4>
-
-                <div className="grid grid-cols-2 gap-4 pt-1">
-                  {activeTab.metrics.map((m, idx) => (
-                    <div key={idx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col">
-                      <span className="text-2xl sm:text-3xl font-black text-blue-600 dark:text-blue-400">
+                <div className="lg:col-span-5 flex flex-col gap-4">
+                  {currentIndustry.metrics.map((m) => (
+                    <div
+                      key={m.label}
+                      className="p-6 rounded-2xl bg-[#FAFBFD] border border-[#E5E7EB] flex flex-col gap-1"
+                    >
+                      <span className="text-[32px] sm:text-[40px] font-extrabold text-[#0F172A] tracking-tight leading-none">
                         {m.value}
                       </span>
-                      <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">
+                      <span className="text-[12px] font-semibold text-[#64748B] uppercase tracking-wider">
                         {m.label}
                       </span>
                     </div>
