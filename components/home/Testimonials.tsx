@@ -57,7 +57,7 @@ export const Testimonials: React.FC = () => {
           >
             <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-black text-xl flex items-center justify-center shadow-md shadow-blue-600/30">
+                <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-blue-600 to-indigo-600 text-white font-black text-xl flex items-center justify-center shadow-md shadow-blue-600/30">
                   {activeTestimonial.authorAvatar || activeTestimonial.companyLogo.charAt(0)}
                 </div>
                 <div>
