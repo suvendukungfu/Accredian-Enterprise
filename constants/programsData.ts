@@ -180,7 +180,7 @@ export const PROGRAMS_DATA: ExecutiveProgram[] = [
     image: "/images/programs/product.png",
     description: "Learn how modern product leaders integrate AI capabilities into product roadmaps, design intelligent user experiences, and validate LLM-powered feature ideas.",
     duration: "6-8 Weeks",
-    format: "Live Online + Capstone",
+    format: "Live Online",
     targetAudience: "VPs of Product, Principal Product Managers, UX Directors & Design Leads",
     keyOutcomes: [
       "AI-native product discovery framework",
@@ -236,7 +236,7 @@ export const PROGRAMS_DATA: ExecutiveProgram[] = [
     image: "/images/programs/operations.png",
     description: "Automate complex enterprise workflows, optimize supply chain operations with predictive analytics, and streamline cross-functional business execution.",
     duration: "6 Weeks",
-    format: "Blended Cohort",
+    format: "Hybrid Cohort",
     targetAudience: "Chief Operating Officers, Operations Directors, Process Excellence Managers",
     keyOutcomes: [
       "End-to-end intelligent workflow automation",
