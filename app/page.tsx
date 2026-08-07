@@ -14,6 +14,8 @@ import { AccredianEdge } from "@/components/home/AccredianEdge";
 import { Programs } from "@/components/home/Programs";
 import { ProgramDrawer } from "@/components/home/ProgramDrawer";
 import { ROICalculator } from "@/components/home/ROICalculator";
+import { DataVizSection } from "@/components/home/DataVizSection";
+import { UseCasesSection } from "@/components/home/UseCasesSection";
 import { CATFramework } from "@/components/home/CATFramework";
 import { ComparisonMatrix } from "@/components/home/ComparisonMatrix";
 import { CaseStudies } from "@/components/home/CaseStudies";
@@ -80,6 +82,12 @@ export default function Home() {
 
         {/* Interactive Enterprise ROI & Capability Estimator */}
         <ROICalculator onOpenEnquireModal={(options) => openLeadModal(options)} />
+
+        {/* Recharts Interactive Data Visualization Section */}
+        <DataVizSection />
+
+        {/* Tabbed Industry Sectors Served */}
+        <UseCasesSection onOpenEnquireModal={(options) => openLeadModal(options)} />
 
         {/* CAT Framework */}
         <CATFramework />
