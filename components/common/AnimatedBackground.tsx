@@ -82,14 +82,14 @@ export const AnimatedBackground: React.FC = () => {
         {/* Primary Hero Atmospheric Blue/Purple Lighting Glow */}
         <motion.div
           style={{ scale: prefersReducedMotion ? 1 : heroGlowScale }}
-          className="absolute -top-32 right-[-5%] w-[680px] h-[680px] rounded-full bg-linear-to-br from-blue-200/35 via-indigo-200/25 to-purple-200/20 blur-[140px]"
+          className="absolute -top-32 right-[-5%] w-170 h-170 rounded-full bg-linear-to-br from-blue-200/35 via-indigo-200/25 to-purple-200/20 blur-[140px]"
         />
 
         {/* Mid-Page Enterprise Indigo/Cyan Atmospheric Blob */}
-        <div className="absolute top-[32%] -left-32 w-[600px] h-[600px] rounded-full bg-linear-to-tr from-indigo-100/30 via-blue-100/20 to-sky-100/25 blur-[130px]" />
+        <div className="absolute top-[32%] -left-32 w-150 h-150 rounded-full bg-linear-to-tr from-indigo-100/30 via-blue-100/20 to-sky-100/25 blur-[130px]" />
 
         {/* Lower Page Violet/Slate Atmospheric Lighting Accent */}
-        <div className="absolute top-[68%] right-[5%] w-[620px] h-[620px] rounded-full bg-linear-to-bl from-violet-100/25 via-indigo-100/20 to-blue-100/15 blur-[140px]" />
+        <div className="absolute top-[68%] right-[5%] w-155 h-155 rounded-full bg-linear-to-bl from-violet-100/25 via-indigo-100/20 to-blue-100/15 blur-[140px]" />
       </motion.div>
 
       {/* LAYER 2: Delicate Dotted Grid & Abstract Vector Technology Lines (Medium Movement) */}
