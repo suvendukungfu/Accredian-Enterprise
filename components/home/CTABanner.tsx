@@ -50,13 +50,16 @@ export const CTABanner: React.FC<CTABannerProps> = ({ onOpenEnquireModal }) => {
             </div>
 
             <div className="shrink-0">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 18 }}
                 onClick={onOpenEnquireModal}
-                className="inline-flex items-center gap-2.5 h-14 px-8 rounded-2xl bg-white text-[#0F172A] font-bold text-[15px] shadow-xl hover:shadow-2xl hover:bg-slate-50 transition-all duration-200 active:scale-[0.98] group"
+                className="inline-flex items-center gap-2.5 h-14 px-8 rounded-2xl bg-white text-[#0F172A] font-bold text-[15px] shadow-xl hover:shadow-2xl hover:bg-slate-50 transition-all duration-200 active:scale-[0.98] group cursor-pointer"
               >
                 <span>Enquire Now</span>
                 <ArrowRight className="w-4.5 h-4.5 text-blue-600 group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </motion.button>
             </div>
           </div>
         </motion.div>
