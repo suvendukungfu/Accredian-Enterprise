@@ -82,7 +82,7 @@ const subtitleVariants = {
       delay: 0.25,
     },
   },
-};
+} as const;
 
 const fadeUpCard = {
   hidden: { opacity: 0, y: 24 },
