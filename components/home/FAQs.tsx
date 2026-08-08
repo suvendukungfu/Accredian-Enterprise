@@ -19,7 +19,7 @@ export const FAQs: React.FC = () => {
   const filteredFaqs = FAQS_DATA.filter((faq) => faq.category === activeCategory);
 
   return (
-    <section id="faqs" className="py-20 sm:py-28 bg-white border-t border-[#F1F5F9]">
+    <section id="faqs" className="py-20 sm:py-28 bg-transparent border-t border-[#F1F5F9]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

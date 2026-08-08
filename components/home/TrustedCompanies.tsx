@@ -8,7 +8,7 @@ export const TrustedCompanies: React.FC = () => {
   return (
     <section
       id="clients"
-      className="py-10 sm:py-12 bg-white border-y border-[#E5E7EB] transition-colors"
+      className="py-10 sm:py-12 bg-white/70 backdrop-blur-md border-y border-[#E5E7EB]/80 transition-colors relative z-1"
     >
       <Container>
         <div className="flex items-center justify-between sm:justify-center gap-8 sm:gap-14 lg:gap-20 overflow-x-auto scrollbar-hide">

@@ -57,7 +57,7 @@ export const SuccessMetrics: React.FC = () => {
     <section
       id="stats"
       ref={ref as React.RefObject<HTMLDivElement>}
-      className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors"
+      className="py-20 sm:py-28 bg-transparent transition-colors relative z-1"
     >
       <Container>
         {/* Section Header */}

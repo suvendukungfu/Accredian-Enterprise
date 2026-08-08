@@ -36,7 +36,7 @@ export const DataVizSection: React.FC = () => {
   const [activeChart, setActiveChart] = useState<"outcomes" | "growth">("outcomes");
 
   return (
-    <section id="analytics" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
+    <section id="analytics" className="py-20 sm:py-28 bg-transparent transition-colors border-y border-[#E5E7EB]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

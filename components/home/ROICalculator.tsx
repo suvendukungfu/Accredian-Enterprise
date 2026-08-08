@@ -102,7 +102,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
   const netROI = Math.max(0, Math.round(((grossFinancialSavings - estimatedTrainingInvestment) / estimatedTrainingInvestment) * 100));
 
   return (
-    <section id="roi-calculator" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
+    <section id="roi-calculator" className="py-20 sm:py-28 bg-transparent transition-colors border-y border-[#E5E7EB]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

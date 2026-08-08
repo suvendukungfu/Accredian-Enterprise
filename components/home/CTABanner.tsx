@@ -11,7 +11,7 @@ interface CTABannerProps {
 
 export const CTABanner: React.FC<CTABannerProps> = ({ onOpenEnquireModal }) => {
   return (
-    <section className="py-16 sm:py-24 bg-[#FAFBFD]">
+    <section className="py-16 sm:py-24 bg-transparent relative z-1">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 30 }}

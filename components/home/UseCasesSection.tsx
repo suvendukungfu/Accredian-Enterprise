@@ -104,7 +104,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onOpenEnquireM
   const currentIndustry = INDUSTRIES.find((ind) => ind.id === activeTab) || INDUSTRIES[0];
 
   return (
-    <section id="use-cases" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors">
+    <section id="use-cases" className="py-20 sm:py-28 bg-transparent transition-colors relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

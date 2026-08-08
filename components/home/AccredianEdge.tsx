@@ -113,7 +113,7 @@ const PillarCard: React.FC<PillarCardProps> = ({ pillar, index }) => {
 
 export const AccredianEdge: React.FC = () => {
   return (
-    <section id="edge" className="py-20 sm:py-28 bg-white transition-colors">
+    <section id="edge" className="py-20 sm:py-28 bg-transparent transition-colors relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

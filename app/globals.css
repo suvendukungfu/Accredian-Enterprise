@@ -69,10 +69,9 @@
   /* Subtle page background gradient */
   .page-bg-gradient {
     background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(219, 234, 254, 0.4) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(199, 210, 254, 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(219, 234, 254, 0.15) 0%, transparent 50%),
-      #FAFBFD;
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(219, 234, 254, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(199, 210, 254, 0.15) 0%, transparent 50%),
+      transparent;
   }
 }
 

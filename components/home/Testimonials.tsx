@@ -20,7 +20,7 @@ export const Testimonials: React.FC = () => {
   const activeTestimonial = TESTIMONIALS_DATA[currentIndex];
 
   return (
-    <section id="testimonials" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors">
+    <section id="testimonials" className="py-20 sm:py-28 bg-transparent transition-colors relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

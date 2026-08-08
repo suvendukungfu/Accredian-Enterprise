@@ -38,7 +38,7 @@ const CAT_STEPS = [
 
 export const CATFramework: React.FC = () => {
   return (
-    <section id="cat" className="py-20 sm:py-28 bg-white border-y border-[#E5E7EB]">
+    <section id="cat" className="py-20 sm:py-28 bg-transparent border-y border-[#E5E7EB]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div

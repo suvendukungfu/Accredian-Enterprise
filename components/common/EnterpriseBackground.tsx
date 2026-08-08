@@ -149,7 +149,7 @@ export const EnterpriseBackground: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none"
+      className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none"
     >
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {/* LAYER 0: Google DeepMind & Cloud Inspired Spectral Base Gradient */}
@@ -159,16 +159,15 @@ export const EnterpriseBackground: React.FC = () => {
         style={{
           background: [
             // Hero Right Spectral Aura (Google Blue #4285F4 + Cyan #00E5FF)
-            "radial-gradient(ellipse 85% 55% at 72% 5%, rgba(66, 133, 244, 0.18) 0%, rgba(0, 229, 255, 0.08) 40%, transparent 70%)",
+            "radial-gradient(ellipse 85% 55% at 72% 5%, rgba(66, 133, 244, 0.14) 0%, rgba(0, 229, 255, 0.06) 40%, transparent 70%)",
             // Hero Left Clean Atmospheric Wash
-            "radial-gradient(ellipse 70% 45% at 20% 0%, rgba(219, 234, 254, 0.45) 0%, transparent 60%)",
+            "radial-gradient(ellipse 70% 45% at 20% 0%, rgba(219, 234, 254, 0.35) 0%, transparent 60%)",
             // Mid-Section Google Gemini Violet Wash (#7C4DFF)
-            "radial-gradient(ellipse 65% 45% at 30% 42%, rgba(124, 77, 255, 0.09) 0%, rgba(66, 133, 244, 0.06) 50%, transparent 75%)",
+            "radial-gradient(ellipse 65% 45% at 30% 42%, rgba(124, 77, 255, 0.07) 0%, rgba(66, 133, 244, 0.05) 50%, transparent 75%)",
             // Lower Section Vibrant Electric Cyan/Blue Horizon (#00E5FF)
-            "radial-gradient(ellipse 60% 40% at 75% 72%, rgba(0, 229, 255, 0.08) 0%, rgba(99, 102, 241, 0.07) 50%, transparent 70%)",
+            "radial-gradient(ellipse 60% 40% at 75% 72%, rgba(0, 229, 255, 0.06) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 70%)",
             // Footer CTA Deep Aura Accent
-            "radial-gradient(ellipse 70% 35% at 50% 96%, rgba(66, 133, 244, 0.15) 0%, rgba(124, 77, 255, 0.1) 60%, transparent 80%)",
-            "#FAFBFD",
+            "radial-gradient(ellipse 70% 35% at 50% 96%, rgba(66, 133, 244, 0.12) 0%, rgba(124, 77, 255, 0.08) 60%, transparent 80%)",
           ].join(", "),
         }}
       />

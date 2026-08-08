@@ -95,7 +95,7 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({ onOpenEnquir
   };
 
   return (
-    <section id="comparison" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-t border-[#E5E7EB]">
+    <section id="comparison" className="py-20 sm:py-28 bg-transparent transition-colors border-t border-[#E5E7EB]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">

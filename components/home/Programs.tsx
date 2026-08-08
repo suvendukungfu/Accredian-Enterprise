@@ -43,7 +43,7 @@ export const Programs: React.FC<ProgramsProps> = ({ onOpenEnquireModal, onSelect
   });
 
   return (
-    <section id="programs" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
+    <section id="programs" className="py-20 sm:py-28 bg-transparent transition-colors border-y border-[#E5E7EB]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">

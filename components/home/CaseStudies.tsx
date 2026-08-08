@@ -21,7 +21,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onOpenEnquireModal }) 
   const activeCase = CASE_STUDIES_DATA[activeIdx];
 
   return (
-    <section id="case-studies" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
+    <section id="case-studies" className="py-20 sm:py-28 bg-transparent transition-colors border-y border-[#E5E7EB]/80 relative z-1">
       <Container>
         {/* Section Header */}
         <motion.div
