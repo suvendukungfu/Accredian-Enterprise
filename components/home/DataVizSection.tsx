@@ -64,25 +64,43 @@ export const DataVizSection: React.FC = () => {
           <div className="flex items-center justify-center gap-2 mt-8 p-1.5 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm w-fit mx-auto">
             <button
               onClick={() => setActiveChart("outcomes")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none ${
+              className={`relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none cursor-pointer ${
                 activeChart === "outcomes"
-                  ? "bg-[#0F172A] text-white shadow-md shadow-slate-900/15"
+                  ? "text-white"
                   : "text-[#64748B] hover:text-[#0F172A] hover:bg-slate-50"
               }`}
             >
-              <BarChart3 className="w-4 h-4" />
-              <span>Salary Outcome Lift</span>
+              {activeChart === "outcomes" && (
+                <motion.div
+                  layoutId="activeChartTabPill"
+                  className="absolute inset-0 bg-[#0F172A] rounded-xl shadow-md shadow-slate-900/15"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative z-1 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4" />
+                <span>Salary Outcome Lift</span>
+              </span>
             </button>
             <button
               onClick={() => setActiveChart("growth")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none ${
+              className={`relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus:outline-none cursor-pointer ${
                 activeChart === "growth"
-                  ? "bg-[#0F172A] text-white shadow-md shadow-slate-900/15"
+                  ? "text-white"
                   : "text-[#64748B] hover:text-[#0F172A] hover:bg-slate-50"
               }`}
             >
-              <PieIcon className="w-4 h-4" />
-              <span>YoY Enterprise Growth</span>
+              {activeChart === "growth" && (
+                <motion.div
+                  layoutId="activeChartTabPill"
+                  className="absolute inset-0 bg-[#0F172A] rounded-xl shadow-md shadow-slate-900/15"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative z-1 flex items-center gap-2">
+                <PieIcon className="w-4 h-4" />
+                <span>YoY Enterprise Growth</span>
+              </span>
             </button>
           </div>
         </motion.div>
