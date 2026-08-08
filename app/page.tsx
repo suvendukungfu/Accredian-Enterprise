@@ -52,7 +52,7 @@ export default function Home() {
       {/* Global FAANG-level Ambient Background Grid & Volumetric Lights */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         {/* Delicate dotted grid overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.2px,transparent_1.2px)] [background-size:48px_48px] opacity-45" />
+        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.2px,transparent_1.2px)] bg-size-[48px_48px] opacity-45" />
         
         {/* Soft breathing lighting blobs */}
         <motion.div
@@ -62,7 +62,7 @@ export default function Home() {
             scale: [1, 1.12, 0.92, 1]
           }}
           transition={{ repeat: Infinity, duration: 24, ease: "easeInOut" }}
-          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-blue-100/30 blur-[130px]"
+          className="absolute -top-40 -right-40 w-150 h-150 rounded-full bg-blue-100/30 blur-[130px]"
         />
         <motion.div
           animate={{
@@ -71,7 +71,7 @@ export default function Home() {
             scale: [1, 0.92, 1.08, 1]
           }}
           transition={{ repeat: Infinity, duration: 28, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[35%] -left-40 w-[550px] h-[550px] rounded-full bg-indigo-100/25 blur-[125px]"
+          className="absolute top-[35%] -left-40 w-137.5 h-137.5 rounded-full bg-indigo-100/25 blur-[125px]"
         />
         <motion.div
           animate={{
@@ -80,7 +80,7 @@ export default function Home() {
             scale: [1, 1.08, 0.9, 1]
           }}
           transition={{ repeat: Infinity, duration: 32, ease: "easeInOut", delay: 4 }}
-          className="absolute -bottom-40 right-20 w-[600px] h-[600px] rounded-full bg-violet-100/20 blur-[140px]"
+          className="absolute -bottom-40 right-20 w-150 h-150 rounded-full bg-violet-100/20 blur-[140px]"
         />
       </div>
 
