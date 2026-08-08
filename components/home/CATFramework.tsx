@@ -1,9 +1,22 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Cpu, Target, Rocket, Award, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+
+const Capability3DCanvas = dynamic(
+  () => import("./Capability3DCanvas").then((mod) => mod.Capability3DCanvas),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-72 sm:h-80 flex items-center justify-center bg-blue-50/20 rounded-3xl animate-pulse">
+        <span className="text-xs text-slate-400 font-medium tracking-wider">Initializing 3D Capability Model...</span>
+      </div>
+    ),
+  }
+);
 
 const CAT_STEPS = [
   {
@@ -38,7 +51,7 @@ const CAT_STEPS = [
 
 export const CATFramework: React.FC = () => {
   return (
-    <section id="cat" className="py-20 sm:py-28 bg-transparent border-y border-[#E5E7EB]/80 relative z-1">
+    <section id="cat" className="py-20 sm:py-28 bg-transparent border-y border-[#E5E7EB]/80 relative z-1 overflow-hidden">
       <Container>
         {/* Section Header */}
         <motion.div
@@ -46,7 +59,7 @@ export const CATFramework: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
+          className="text-center max-w-2xl mx-auto mb-10"
         >
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -62,6 +75,11 @@ export const CATFramework: React.FC = () => {
             Our systematic 4-stage Capability Assessment & Transformation Framework engineered for measurable enterprise skill expansion.
           </p>
         </motion.div>
+
+        {/* Senior Level Scroll-Driven 3D WebGL Model Stage */}
+        <div className="mb-12 flex justify-center">
+          <Capability3DCanvas />
+        </div>
 
         {/* 4 Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
