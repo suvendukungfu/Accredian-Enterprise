@@ -28,7 +28,7 @@ import { CommandPalette } from "@/components/common/CommandPalette";
 import { FloatingCTA } from "@/components/common/FloatingCTA";
 import { ReadingProgress } from "@/components/common/ReadingProgress";
 import { BackToTop } from "@/components/common/BackToTop";
-import { AnimatedBackground } from "@/components/common/AnimatedBackground";
+import { EnterpriseBackground } from "@/components/common/EnterpriseBackground";
 import { useApp } from "@/app/providers";
 import { ExecutiveProgram } from "@/types/program";
 
@@ -49,8 +49,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAFBFD] text-[#0F172A] antialiased transition-colors relative overflow-hidden">
-      {/* Reusable Cinematic Animated Background System */}
-      <AnimatedBackground />
+      {/* Reusable Enterprise Background Visual Layer */}
+      <EnterpriseBackground />
 
       {/* Top Reading Scroll Progress Indicator */}
       <ReadingProgress />
