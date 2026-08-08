@@ -49,7 +49,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAFBFD] text-[#0F172A] antialiased transition-colors relative overflow-hidden">
-      {/* Reusable Enterprise Background Visual Layer */}
+      {/* Premium Enterprise Cinematic Background System */}
       <EnterpriseBackground />
 
       {/* Top Reading Scroll Progress Indicator */}
