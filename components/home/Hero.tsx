@@ -60,7 +60,7 @@ const headlineVariants = {
     opacity: 1,
     y: 0,
     clipPath: "inset(0% 0% 0% 0%)",
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   },
 };
 
@@ -69,7 +69,7 @@ const fadeUp = {
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut", delay },
+    transition: { duration: 0.6, ease: "easeOut" as const, delay },
   }),
 };
 
@@ -86,9 +86,9 @@ const badgeItemVariants = {
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 100, damping: 14 },
+    transition: { type: "spring" as const, stiffness: 100, damping: 14 },
   },
-};
+} as const;
 
 export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
   const [enterpriseSize, setEnterpriseSize] = useState(100);
@@ -397,9 +397,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEnquireModal }) => {
 
               <motion.button
                 onClick={onOpenEnquireModal}
-                whileHover={{ y: -1.5, shadow: "0 8px 24px rgba(15, 23, 42, 0.12)" }}
+                whileHover={{ y: -1.5, boxShadow: "0 8px 24px rgba(15, 23, 42, 0.12)" }}
                 whileTap={{ scale: 0.975 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                transition={{ type: "spring" as const, stiffness: 200, damping: 15 }}
                 className="w-full h-12 rounded-xl bg-[#0F172A] text-white font-bold text-[14px] transition-colors hover:bg-[#1E293B] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 Book Executive Audit

@@ -145,9 +145,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Request Demo CTA with hover lift & active spring */}
           <motion.button
             onClick={onOpenEnquireModal}
-            whileHover={{ y: -1.5, shadow: "0 6px 20px rgba(15, 23, 42, 0.12)" }}
+            whileHover={{ y: -1.5, boxShadow: "0 6px 20px rgba(15, 23, 42, 0.12)" }}
             whileTap={{ scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
             className="hidden sm:inline-flex h-10 px-5.5 items-center justify-center rounded-xl bg-[#0F172A] text-white font-semibold text-[13.5px] shadow-sm hover:bg-[#1E293B] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
             Request Demo
