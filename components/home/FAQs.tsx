@@ -49,13 +49,20 @@ export const FAQs: React.FC = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus:outline-none ${
+              className={`relative px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-500 focus:outline-none cursor-pointer ${
                 activeCategory === cat
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                  ? "text-white"
                   : "bg-white text-[#475569] hover:bg-slate-50 border border-[#E5E7EB]"
               }`}
             >
-              {cat}
+              {activeCategory === cat && (
+                <motion.div
+                  layoutId="activeFaqCategoryPill"
+                  className="absolute inset-0 bg-blue-600 rounded-xl shadow-md shadow-blue-600/20"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative z-1">{cat}</span>
             </button>
           ))}
         </div>
