@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { SlidersHorizontal, Laptop2, CalendarCheck, ShieldAlert } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -40,22 +40,16 @@ const PILLARS = [
   },
 ];
 
-const headingVariants = {
-  hidden: { opacity: 0, y: 15, clipPath: "inset(100% 0% 0% 0%)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    clipPath: "inset(0% 0% 0% 0%)",
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-  },
-} as const;
-
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: "easeOut" as const, delay: i * 0.08 },
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      delay: i * 0.1,
+    },
   }),
 };
 
@@ -84,62 +78,60 @@ const PillarCard: React.FC<PillarCardProps> = ({ pillar, index }) => {
   }, []);
 
   return (
-    <motion.article
+    <motion.div
       ref={cardRef}
       custom={index}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.2 }}
       variants={fadeUp}
-      whileHover={{ y: -4 }}
-      className="relative bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.04)] transition-all duration-300 group hover:border-blue-200/80 flex flex-col overflow-hidden"
+      whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
+      className="relative bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.07)] transition-all duration-300 group hover:border-blue-200 flex flex-col overflow-hidden"
     >
-      {/* Radial Highlight */}
+      {/* Subtle cursor light highlight (<5% opacity) */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
         style={{
-          background: "radial-gradient(280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.04), transparent 70%)",
+          background: "radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.04), transparent 70%)",
         }}
       />
 
-      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300 relative z-10 ${pillar.iconColor}`}>
+      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 ${pillar.iconColor}`}>
         {pillar.icon}
       </div>
 
-      <h3 className="text-[17px] font-bold text-[#0F172A] mb-3 group-hover:text-blue-600 transition-colors leading-snug relative z-10">
+      <h3 className="text-[17px] font-bold text-[#0F172A] mb-3 group-hover:text-blue-600 transition-colors leading-snug">
         {pillar.title}
       </h3>
 
-      <p className="text-[13px] text-[#64748B] leading-[1.65] flex-1 relative z-10">
+      <p className="text-[13px] text-[#64748B] leading-[1.65] flex-1">
         {pillar.description}
       </p>
-    </motion.article>
+    </motion.div>
   );
 };
 
 export const AccredianEdge: React.FC = () => {
   return (
-    <section id="edge" className="py-20 sm:py-28 bg-white/40 transition-colors relative z-10">
+    <section id="edge" className="py-20 sm:py-28 bg-white transition-colors">
       <Container>
         {/* Section Header */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
         >
           <span className="inline-flex items-center px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
             Why Partner With Us
           </span>
-          <motion.h2
-            variants={headingVariants}
-            className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]"
-          >
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
             The{" "}
             <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Accredian Edge
             </span>
-          </motion.h2>
+          </h2>
           <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
             Our enterprise capability building methodology combines rigorous academic fundamentals with agile industry practice.
           </p>

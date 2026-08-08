@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useId } from "react";
+import React, { useState, useId, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Calculator,
   TrendingUp,
@@ -43,6 +44,48 @@ const DOMAIN_MULTIPLIERS: Record<
   },
 };
 
+/** Spotlighting Card wrapper with radial cursor highlight (<5% opacity) */
+interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const SpotlightCard: React.FC<SpotlightCardProps> = ({ children, className = "", ...props }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+    };
+
+    card.addEventListener("mousemove", handleMouseMove);
+    return () => card.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative bg-white border border-[#E5E7EB] rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.07)] transition-all duration-300 group overflow-hidden ${className}`}
+      {...props}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
+        style={{
+          background: "radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.04), transparent 70%)",
+        }}
+      />
+      {children}
+    </div>
+  );
+};
+
 export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal }) => {
   const teamSizeId = useId();
   const avgSalaryId = useId();
@@ -62,9 +105,15 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
     <section id="roi-calculator" className="py-20 sm:py-28 bg-[#FAFBFD] transition-colors border-y border-[#E5E7EB]">
       <Container>
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center max-w-2xl mx-auto mb-14 sm:mb-16"
+        >
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[12px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 mb-5">
-            <Calculator className="w-3.5 h-3.5 text-blue-600" />
+            <Calculator className="w-3.5 h-3.5 text-blue-600" aria-hidden="true" />
             <span>Interactive Enterprise ROI Model</span>
           </span>
           <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] leading-[1.1]">
@@ -76,11 +125,17 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
           <p className="mt-4 text-[16px] sm:text-[17px] text-[#64748B] leading-[1.65] max-w-xl mx-auto">
             Model projected annual productivity gains, engineering hours saved, and financial ROI across enterprise cohorts.
           </p>
-        </div>
+        </motion.div>
 
         {/* Calculator Main Card */}
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-12 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-shadow duration-300">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+          className="max-w-5xl mx-auto"
+        >
+          <SpotlightCard className="p-8 sm:p-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
               {/* Left Column Controls */}
               <div className="lg:col-span-6 flex flex-col gap-6">
@@ -93,7 +148,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
                       <button
                         key={domain}
                         onClick={() => setSelectedDomain(domain)}
-                        className={`px-3.5 py-2.5 rounded-xl text-[12px] font-bold transition-all duration-200 border text-left ${
+                        className={`px-3.5 py-2.5 rounded-xl text-[12px] font-bold transition-all duration-200 border text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                           selectedDomain === domain
                             ? "bg-[#0F172A] text-white border-[#0F172A] shadow-sm"
                             : "bg-white text-[#475569] border-[#E5E7EB] hover:bg-slate-50"
@@ -109,10 +164,10 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <label htmlFor={teamSizeId} className="text-[14px] font-medium text-[#374151] flex items-center gap-2">
-                      <Users className="w-4 h-4 text-blue-600" />
+                      <Users className="w-4 h-4 text-blue-600" aria-hidden="true" />
                       <span>Cohort Team Size</span>
                     </label>
-                    <span className="text-[14px] font-bold text-[#0F172A]">{teamSize} Employees</span>
+                    <span className="text-[14px] font-bold text-[#0F172A] tabular-nums">{teamSize} Employees</span>
                   </div>
                   <input
                     id={teamSizeId}
@@ -123,6 +178,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
                     value={teamSize}
                     onChange={(e) => setTeamSize(Number(e.target.value))}
                     aria-label="Cohort team size slider"
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
                   />
                   <div className="flex justify-between text-[11px] text-[#94A3B8] font-semibold">
                     <span>10 Pilot</span>
@@ -135,107 +191,131 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <label htmlFor={avgSalaryId} className="text-[14px] font-medium text-[#374151] flex items-center gap-2">
-                      <DollarSign className="w-4 h-4 text-emerald-600" />
+                      <DollarSign className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                       <span>Avg Annual Salary</span>
                     </label>
-                    <span className="text-[14px] font-bold text-[#0F172A]">${avgSalary.toLocaleString()} USD</span>
+                    <span className="text-[14px] font-bold text-[#0F172A] tabular-nums">${avgSalary.toLocaleString()}</span>
                   </div>
                   <input
                     id={avgSalaryId}
                     type="range"
-                    min="50000"
-                    max="250000"
+                    min="60000"
+                    max="220000"
                     step="5000"
                     value={avgSalary}
                     onChange={(e) => setAvgSalary(Number(e.target.value))}
                     aria-label="Average annual salary slider"
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
                   />
                   <div className="flex justify-between text-[11px] text-[#94A3B8] font-semibold">
-                    <span>$50k</span>
-                    <span>$150k</span>
-                    <span>$250k+</span>
+                    <span>$60k Entry</span>
+                    <span>$140k Senior</span>
+                    <span>$220k Executive</span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-[#E5E7EB] text-[12px] text-[#64748B] flex items-start gap-2.5">
-                  <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                  <span>
-                    Projections are calculated based on benchmarked productivity data across 100+ enterprise cohorts.
-                  </span>
+                {/* Capability Summary Badge */}
+                <div className="p-4 rounded-2xl bg-blue-50/60 border border-blue-100 flex items-start gap-3 mt-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" aria-hidden="true" />
+                  <div className="text-[12px] text-[#334155] leading-relaxed font-medium">
+                    <strong className="text-[#0F172A] font-bold">{domainConfig.label}:</strong> Projected +{domainConfig.prodBoost}% velocity acceleration per team member.
+                  </div>
                 </div>
               </div>
 
-              {/* Right Column Financial ROI Summary */}
-              <div className="lg:col-span-6 flex flex-col justify-between gap-6 bg-[#FAFBFD] border border-[#E5E7EB] rounded-2xl p-6 sm:p-8">
-                <div className="flex flex-col gap-5">
-                  <span className="text-[11px] font-bold text-blue-600 uppercase tracking-widest">
-                    Projected Annual Outcomes
-                  </span>
+              {/* Right Column Calculated Outputs */}
+              <div className="lg:col-span-6 flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900 text-white shadow-xl relative overflow-hidden">
+                {/* Decorative background glow */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
 
-                  <div>
-                    <span className="text-[12px] font-semibold text-[#64748B] block">
-                      Estimated Financial Productivity Savings
+                <div className="relative z-10 flex flex-col gap-6">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-5">
+                    <span className="text-[13px] font-bold uppercase tracking-wider text-slate-400">
+                      Calculated Enterprise Impact
                     </span>
-                    <span className="text-[36px] sm:text-[44px] font-extrabold text-[#0F172A] tracking-tight leading-none block mt-1">
-                      ${Math.round(grossFinancialSavings).toLocaleString()}
+                    <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-0.5 rounded-full">
+                      <TrendingUp className="w-3.5 h-3.5" aria-hidden="true" />
+                      +{netROI}% Net ROI
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#E5E7EB]">
-                    <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB]">
-                      <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-[16px]">
-                        <TrendingUp className="w-4 h-4" />
-                        <span>+{domainConfig.prodBoost}%</span>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                      <div className="text-[11px] font-medium text-slate-400 flex items-center gap-1.5 mb-1">
+                        <Clock className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />
+                        <span>Annual Hours Saved</span>
                       </div>
-                      <span className="text-[11px] font-semibold text-[#64748B] mt-0.5 block">
-                        Productivity Boost
-                      </span>
+                      <motion.div
+                        key={totalHoursSaved}
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-[24px] sm:text-[28px] font-extrabold text-white tracking-tight tabular-nums"
+                      >
+                        {totalHoursSaved.toLocaleString()} hrs
+                      </motion.div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB]">
-                      <div className="flex items-center gap-1.5 text-blue-600 font-bold text-[16px]">
-                        <Clock className="w-4 h-4" />
-                        <span>{totalHoursSaved.toLocaleString()} hrs</span>
+                    <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                      <div className="text-[11px] font-medium text-slate-400 flex items-center gap-1.5 mb-1">
+                        <DollarSign className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+                        <span>Gross Value Created</span>
                       </div>
-                      <span className="text-[11px] font-semibold text-[#64748B] mt-0.5 block">
-                        Annual Hours Saved
-                      </span>
+                      <motion.div
+                        key={grossFinancialSavings}
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-[24px] sm:text-[28px] font-extrabold text-white tracking-tight tabular-nums"
+                      >
+                        ${Math.round(grossFinancialSavings).toLocaleString()}
+                      </motion.div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-between">
-                    <span className="text-[13px] font-bold text-emerald-900">Projected Net ROI</span>
-                    <span className="text-[20px] font-extrabold text-emerald-700">+{netROI}% ROI</span>
-                  </div>
-
-                  <div className="flex flex-col gap-2 pt-1 text-[12px] font-medium text-[#475569]">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                      <span>Custom Capstone ROI Assessment included</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                      <span>1-on-1 Executive Skill Gap Audit</span>
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-blue-900/40 to-indigo-900/40 border border-blue-800/50">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-[12px] font-semibold text-slate-300">
+                          Estimated Program Investment
+                        </div>
+                        <div className="text-[11px] text-slate-400">
+                          Based on custom cohort curriculum & live reviews
+                        </div>
+                      </div>
+                      <div className="text-[18px] font-bold text-white tabular-nums">
+                        ${estimatedTrainingInvestment.toLocaleString()}
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <button
-                  onClick={() =>
-                    onOpenEnquireModal({
-                      domain: selectedDomain,
-                      message: `Requesting ROI audit for team of ${teamSize} employees in ${selectedDomain}.`,
-                    })
-                  }
-                  className="w-full h-14 rounded-2xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-[15px] inline-flex items-center justify-center gap-2 transition-all duration-200 shadow-md active:scale-[0.98] cursor-pointer"
-                >
-                  <span>Book Custom ROI Audit</span>
-                  <ArrowRight className="w-4.5 h-4.5" />
-                </button>
+                <div className="relative z-10 mt-8 pt-6 border-t border-slate-800 flex flex-col gap-4">
+                  <div className="flex items-center gap-2 text-[12px] text-slate-400">
+                    <ShieldCheck className="w-4 h-4 text-blue-400" aria-hidden="true" />
+                    <span>Includes diagnostic tech audit & post-program ROI verification</span>
+                  </div>
+
+                  <motion.button
+                    onClick={() =>
+                      onOpenEnquireModal({
+                        domain: selectedDomain,
+                        message: `Requesting enterprise ROI model for ${teamSize} employees in ${selectedDomain}.`,
+                      })
+                    }
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring" as const, stiffness: 160, damping: 15 }}
+                    className="w-full h-12 rounded-xl bg-white hover:bg-slate-100 text-[#0F172A] font-bold text-[14px] flex items-center justify-center gap-2 shadow-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+                  >
+                    <span>Request Custom ROI Proposal</span>
+                    <ArrowRight className="w-4 h-4 text-blue-600" aria-hidden="true" />
+                  </motion.button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </SpotlightCard>
+        </motion.div>
       </Container>
     </section>
   );

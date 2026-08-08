@@ -3,6 +3,12 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+interface ConnectionEdge {
+  from: number;
+  to: number;
+  distance: number;
+}
+
 export const Hero3DCanvas: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -10,56 +16,60 @@ export const Hero3DCanvas: React.FC = () => {
     const container = mountRef.current;
     if (!container) return;
 
-    // Check for reduced motion preference
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const prefersReducedMotion = mediaQuery.matches;
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const width = container.clientWidth;
     const height = container.clientHeight;
 
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 18;
+    const camera = new THREE.PerspectiveCamera(55, width / height, 0.1, 1000);
+    camera.position.z = 20;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Particle Node Configuration
-    const particleCount = prefersReducedMotion ? 40 : 110;
-    const originalPositions = new Float32Array(particleCount * 3);
+    // Node Count & Coordinates
+    const particleCount = 110;
+    const basePositions = new Float32Array(particleCount * 3);
     const currentPositions = new Float32Array(particleCount * 3);
-    const particleSizes = new Float32Array(particleCount);
+    const nodeSizes = new Float32Array(particleCount);
     const colors = new Float32Array(particleCount * 3);
+    const driftOffsets = new Float32Array(particleCount * 3);
+    const driftSpeeds = new Float32Array(particleCount);
 
     const blueColor = new THREE.Color("#3b82f6");
     const indigoColor = new THREE.Color("#6366f1");
     const cyanColor = new THREE.Color("#06b6d4");
 
-    // Initialize node parameters
     for (let i = 0; i < particleCount; i++) {
-      const x = (Math.random() - 0.5) * 28;
-      const y = (Math.random() - 0.5) * 18;
+      // Create structured network cluster distribution
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      const radius = 4 + Math.random() * 12;
+
+      const x = radius * Math.sin(phi) * Math.cos(theta);
+      const y = radius * Math.sin(phi) * Math.sin(theta) * 0.7;
       const z = (Math.random() - 0.5) * 12;
 
-      originalPositions[i * 3] = x;
-      originalPositions[i * 3 + 1] = y;
-      originalPositions[i * 3 + 2] = z;
+      basePositions[i * 3] = x;
+      basePositions[i * 3 + 1] = y;
+      basePositions[i * 3 + 2] = z;
 
-      currentPositions[i * 3] = x;
-      currentPositions[i * 3 + 1] = y;
-      currentPositions[i * 3 + 2] = z;
+      currentPositions[i * 3] = 0; // Start at origin for assembly entrance
+      currentPositions[i * 3 + 1] = 0;
+      currentPositions[i * 3 + 2] = 0;
 
-      // Assign sizes to create depth layers
-      if (i < particleCount * 0.2) {
-        particleSizes[i] = 0.55; // Foreground
-      } else if (i < particleCount * 0.6) {
-        particleSizes[i] = 0.35; // Midground
-      } else {
-        particleSizes[i] = 0.2;  // Background
-      }
+      driftOffsets[i * 3] = Math.random() * Math.PI * 2;
+      driftOffsets[i * 3 + 1] = Math.random() * Math.PI * 2;
+      driftOffsets[i * 3 + 2] = Math.random() * Math.PI * 2;
+      driftSpeeds[i] = 0.4 + Math.random() * 0.6;
+
+      // Depth-based size variation
+      nodeSizes[i] = 0.25 + (z + 6) / 20;
 
       const mixedColor = blueColor.clone().lerp(
         Math.random() > 0.5 ? indigoColor : cyanColor,
@@ -70,167 +80,102 @@ export const Hero3DCanvas: React.FC = () => {
       colors[i * 3 + 2] = mixedColor.b;
     }
 
-    // Geometry & Custom Shader Material for sizes & opacities
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(currentPositions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    geometry.setAttribute("size", new THREE.BufferAttribute(particleSizes, 1));
+    // Geometry & Points Material
+    const particlesGeometry = new THREE.BufferGeometry();
+    particlesGeometry.setAttribute("position", new THREE.BufferAttribute(currentPositions, 3));
+    particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    // Custom shader material for high performance points with individual sizes & depths
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: { value: 0 },
-        entrance: { value: 0 },
-      },
-      vertexShader: `
-        uniform float time;
-        uniform float entrance;
-        attribute float size;
-        varying vec3 vColor;
-        varying float vOpacity;
-        void main() {
-          vColor = color;
-          // De-assemble coordinates slightly for entrance morphing
-          vec3 pos = position;
-          pos.xyz *= mix(0.1, 1.0, entrance);
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          gl_Position = projectionMatrix * mvPosition;
-          
-          // Size attenuation
-          gl_PointSize = size * (300.0 / -mvPosition.z) * mix(0.0, 1.0, entrance);
-          vOpacity = mix(0.05, 0.85, entrance);
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vColor;
-        varying float vOpacity;
-        void main() {
-          // Circular nodes
-          float dist = distance(gl_PointCoord, vec2(0.5));
-          if (dist > 0.5) discard;
-          float strength = 1.0 - (dist * 2.0);
-          gl_FragColor = vec4(vColor, vOpacity * strength);
-        }
-      `,
-      transparent: true,
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.4,
       vertexColors: true,
+      transparent: true,
+      opacity: 0, // Starts at 0 for assembly fade-in
       depthWrite: false,
     });
 
-    const particlesMesh = new THREE.Points(geometry, material);
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particlesMesh);
 
-    // Connecting Lines Mesh
+    // Pre-calculate valid connection edges
+    const edges: ConnectionEdge[] = [];
+    for (let i = 0; i < particleCount; i++) {
+      for (let j = i + 1; j < particleCount; j++) {
+        const dx = basePositions[i * 3] - basePositions[j * 3];
+        const dy = basePositions[i * 3 + 1] - basePositions[j * 3 + 1];
+        const dz = basePositions[i * 3 + 2] - basePositions[j * 3 + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (dist < 5.2) {
+          edges.push({ from: i, to: j, distance: dist });
+        }
+      }
+    }
+
+    // Line Segments Geometry & Material
+    const linePositions = new Float32Array(edges.length * 6);
+    const lineGeometry = new THREE.BufferGeometry();
+    lineGeometry.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x6366f1,
+      color: 0x3b82f6,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0,
+      depthWrite: false,
     });
 
-    const lineGeometry = new THREE.BufferGeometry();
     const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(linesMesh);
 
-    // Active Traveling Pulse Particles
-    const pulseCount = prefersReducedMotion ? 0 : 6;
+    // Pulse Light Beams travelling through active edges
+    const pulseCount = 8;
     const pulseGeometry = new THREE.BufferGeometry();
     const pulsePositions = new Float32Array(pulseCount * 3);
     const pulseColors = new Float32Array(pulseCount * 3);
-    const pulseSizes = new Float32Array(pulseCount);
 
-    for (let i = 0; i < pulseCount; i++) {
-      pulseSizes[i] = 0.8;
-      pulseColors[i * 3] = 1.0;     // White/Cyan highlight glow
-      pulseColors[i * 3 + 1] = 1.0;
-      pulseColors[i * 3 + 2] = 1.0;
+    const activePulseEdgeIndices = new Int32Array(pulseCount);
+    const pulseProgresses = new Float32Array(pulseCount);
+    const pulseSpeeds = new Float32Array(pulseCount);
+
+    for (let p = 0; p < pulseCount; p++) {
+      activePulseEdgeIndices[p] = Math.floor(Math.random() * edges.length);
+      pulseProgresses[p] = Math.random();
+      pulseSpeeds[p] = 0.2 + Math.random() * 0.3;
+
+      const cyan = new THREE.Color("#38bdf8");
+      pulseColors[p * 3] = cyan.r;
+      pulseColors[p * 3 + 1] = cyan.g;
+      pulseColors[p * 3 + 2] = cyan.b;
     }
 
     pulseGeometry.setAttribute("position", new THREE.BufferAttribute(pulsePositions, 3));
     pulseGeometry.setAttribute("color", new THREE.BufferAttribute(pulseColors, 3));
-    pulseGeometry.setAttribute("size", new THREE.BufferAttribute(pulseSizes, 1));
 
-    const pulseMaterial = new THREE.ShaderMaterial({
-      uniforms: { time: { value: 0 }, entrance: { value: 0 } },
-      vertexShader: `
-        attribute float size;
-        varying vec3 vColor;
-        void main() {
-          vColor = color;
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_Position = projectionMatrix * mvPosition;
-          gl_PointSize = size * (400.0 / -mvPosition.z);
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vColor;
-        void main() {
-          float dist = distance(gl_PointCoord, vec2(0.5));
-          if (dist > 0.5) discard;
-          gl_FragColor = vec4(vColor, 1.0 - (dist * 2.0));
-        }
-      `,
+    const pulseMaterial = new THREE.PointsMaterial({
+      size: 0.65,
+      vertexColors: true,
       transparent: true,
+      opacity: 0,
       depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
 
-    const pulsesPoints = new THREE.Points(pulseGeometry, pulseMaterial);
-    if (!prefersReducedMotion) {
-      scene.add(pulsesPoints);
-    }
+    const pulsesMesh = new THREE.Points(pulseGeometry, pulseMaterial);
+    scene.add(pulsesMesh);
 
-    // Pulse Route Tracking Configuration
-    interface PulseRoute {
-      startNode: number;
-      endNode: number;
-      progress: number;
-      speed: number;
-    }
-
-    const pulses: PulseRoute[] = [];
-    const buildPulseRoutes = () => {
-      if (prefersReducedMotion) return;
-      pulses.length = 0;
-      for (let i = 0; i < pulseCount; i++) {
-        const startNode = Math.floor(Math.random() * particleCount);
-        // Find a nearby node
-        let endNode = (startNode + 1) % particleCount;
-        let minDist = 999;
-        for (let j = 0; j < particleCount; j++) {
-          if (j === startNode) continue;
-          const dx = originalPositions[startNode * 3] - originalPositions[j * 3];
-          const dy = originalPositions[startNode * 3 + 1] - originalPositions[j * 3 + 1];
-          const dz = originalPositions[startNode * 3 + 2] - originalPositions[j * 3 + 2];
-          const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
-          if (d < 6 && d < minDist) {
-            minDist = d;
-            endNode = j;
-          }
-        }
-        pulses.push({
-          startNode,
-          endNode,
-          progress: Math.random(),
-          speed: Math.random() * 0.008 + 0.003,
-        });
-      }
-    };
-
-    buildPulseRoutes();
-
-    // Mouse Parallax Interaction
-    let mouseX = 0;
-    let mouseY = 0;
+    // Mouse Parallax Targets
     let targetMouseX = 0;
     let targetMouseY = 0;
+    let currentMouseX = 0;
+    let currentMouseY = 0;
 
     const handleMouseMove = (event: MouseEvent) => {
-      mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+      const rect = container.getBoundingClientRect();
+      const relativeX = event.clientX - rect.left;
+      const relativeY = event.clientY - rect.top;
+      targetMouseX = (relativeX / rect.width - 0.5) * 2;
+      targetMouseY = (relativeY / rect.height - 0.5) * 2;
     };
 
-    if (!prefersReducedMotion) {
-      window.addEventListener("mousemove", handleMouseMove);
-    }
+    window.addEventListener("mousemove", handleMouseMove);
 
     // Resize Handler
     const handleResize = () => {
@@ -244,159 +189,149 @@ export const Hero3DCanvas: React.FC = () => {
 
     window.addEventListener("resize", handleResize);
 
-    // Animation Loop
+    // Animation & Viewport State
     let animationFrameId: number;
-    let time = 0;
-    let entranceVal = 0;
+    let assemblyProgress = 0;
+    let isVisible = true;
+    const clock = new THREE.Clock();
+
+    // IntersectionObserver to pause rendering when offscreen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(container);
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      time += 0.0085;
-      if (entranceVal < 1) {
-        entranceVal += 0.012; // Form network assembly over ~2 seconds
-        if (entranceVal > 1) entranceVal = 1;
+      if (!isVisible) return;
+
+      const elapsedTime = clock.getElapsedTime();
+
+      // Smooth assembly entrance interpolation (0 -> 1)
+      if (assemblyProgress < 1) {
+        assemblyProgress = Math.min(1, assemblyProgress + 0.018);
+        particlesMaterial.opacity = assemblyProgress * 0.85;
+        lineMaterial.opacity = assemblyProgress * 0.16;
+        pulseMaterial.opacity = assemblyProgress * 0.9;
       }
 
-      material.uniforms.time.value = time;
-      material.uniforms.entrance.value = entranceVal;
+      // Parallax mouse dampening
+      currentMouseX += (targetMouseX - currentMouseX) * 0.04;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.04;
 
-      // Soft real-time node drift & mouse-magnetic displacement
-      targetMouseX += (mouseX * 8 - targetMouseX) * 0.05;
-      targetMouseY += (-mouseY * 6 - targetMouseY) * 0.05;
-
-      const posAttrib = geometry.getAttribute("position") as THREE.BufferAttribute;
+      // Update Node positions with assembly lerp & subtle 3D drift
+      const positionsAttr = particlesGeometry.attributes.position as THREE.BufferAttribute;
+      const posArray = positionsAttr.array as Float32Array;
 
       for (let i = 0; i < particleCount; i++) {
-        // Basic drift noise
-        const ox = originalPositions[i * 3];
-        const oy = originalPositions[i * 3 + 1];
-        const oz = originalPositions[i * 3 + 2];
+        const i3 = i * 3;
+        const driftX = prefersReducedMotion ? 0 : Math.sin(elapsedTime * driftSpeeds[i] + driftOffsets[i3]) * 0.25;
+        const driftY = prefersReducedMotion ? 0 : Math.cos(elapsedTime * driftSpeeds[i] * 0.8 + driftOffsets[i3 + 1]) * 0.25;
+        const driftZ = prefersReducedMotion ? 0 : Math.sin(elapsedTime * driftSpeeds[i] * 0.6 + driftOffsets[i3 + 2]) * 0.15;
 
-        let dx = 0;
-        let dy = 0;
-        let dz = 0;
+        // Assembly target position
+        const targetX = basePositions[i3] + driftX + currentMouseX * 0.8;
+        const targetY = basePositions[i3 + 1] + driftY - currentMouseY * 0.8;
+        const targetZ = basePositions[i3 + 2] + driftZ;
 
-        if (!prefersReducedMotion) {
-          dx = Math.sin(time + i * 0.5) * 0.25;
-          dy = Math.cos(time * 0.8 + i * 0.3) * 0.22;
-          dz = Math.sin(time * 0.5 + i * 0.7) * 0.2;
+        posArray[i3] += (targetX * assemblyProgress - posArray[i3]) * 0.08;
+        posArray[i3 + 1] += (targetY * assemblyProgress - posArray[i3 + 1]) * 0.08;
+        posArray[i3 + 2] += (targetZ * assemblyProgress - posArray[i3 + 2]) * 0.08;
+      }
 
-          // Mouse magnetic displacement for nearby nodes
-          const distToMouse = Math.sqrt(
-            Math.pow(ox + dx - targetMouseX, 2) + Math.pow(oy + dy - targetMouseY, 2)
-          );
+      positionsAttr.needsUpdate = true;
 
-          if (distToMouse < 4.5) {
-            const force = (4.5 - distToMouse) * 0.08;
-            dx += (ox + dx - targetMouseX) * force;
-            dy += (oy + dy - targetMouseY) * force;
+      // Update Line Segment Connection Positions
+      const linePosAttr = lineGeometry.attributes.position as THREE.BufferAttribute;
+      const lineArray = linePosAttr.array as Float32Array;
+
+      for (let e = 0; e < edges.length; e++) {
+        const edge = edges[e];
+        const fromIdx = edge.from * 3;
+        const toIdx = edge.to * 3;
+        const e6 = e * 6;
+
+        lineArray[e6] = posArray[fromIdx];
+        lineArray[e6 + 1] = posArray[fromIdx + 1];
+        lineArray[e6 + 2] = posArray[fromIdx + 2];
+
+        lineArray[e6 + 3] = posArray[toIdx];
+        lineArray[e6 + 4] = posArray[toIdx + 1];
+        lineArray[e6 + 5] = posArray[toIdx + 2];
+      }
+
+      linePosAttr.needsUpdate = true;
+
+      // Update Traveling Light Pulse Beams
+      if (!prefersReducedMotion && edges.length > 0) {
+        const pulsePosAttr = pulseGeometry.attributes.position as THREE.BufferAttribute;
+        const pulseArray = pulsePosAttr.array as Float32Array;
+
+        for (let p = 0; p < pulseCount; p++) {
+          pulseProgresses[p] += 0.008 * pulseSpeeds[p];
+          if (pulseProgresses[p] >= 1) {
+            pulseProgresses[p] = 0;
+            activePulseEdgeIndices[p] = Math.floor(Math.random() * edges.length);
+          }
+
+          const edge = edges[activePulseEdgeIndices[p]];
+          if (edge) {
+            const fromIdx = edge.from * 3;
+            const toIdx = edge.to * 3;
+            const prog = pulseProgresses[p];
+
+            pulseArray[p * 3] = posArray[fromIdx] + (posArray[toIdx] - posArray[fromIdx]) * prog;
+            pulseArray[p * 3 + 1] = posArray[fromIdx + 1] + (posArray[toIdx + 1] - posArray[fromIdx + 1]) * prog;
+            pulseArray[p * 3 + 2] = posArray[fromIdx + 2] + (posArray[toIdx + 2] - posArray[fromIdx + 2]) * prog;
           }
         }
 
-        posAttrib.setXYZ(i, ox + dx, oy + dy, oz + dz);
-      }
-      posAttrib.needsUpdate = true;
-
-      // Recompute connecting lines dynamically from drifting nodes
-      const linePositions: number[] = [];
-      const positionsArray = posAttrib.array as Float32Array;
-
-      for (let i = 0; i < particleCount; i++) {
-        for (let j = i + 1; j < particleCount; j++) {
-          const px = positionsArray[i * 3] - positionsArray[j * 3];
-          const py = positionsArray[i * 3 + 1] - positionsArray[j * 3 + 1];
-          const pz = positionsArray[i * 3 + 2] - positionsArray[j * 3 + 2];
-          const dist = Math.sqrt(px * px + py * py + pz * pz);
-
-          if (dist < 5.2) {
-            linePositions.push(positionsArray[i * 3], positionsArray[i * 3 + 1], positionsArray[i * 3 + 2]);
-            linePositions.push(positionsArray[j * 3], positionsArray[j * 3 + 1], positionsArray[j * 3 + 2]);
-          }
-        }
+        pulsePosAttr.needsUpdate = true;
       }
 
-      lineGeometry.setAttribute("position", new THREE.Float32BufferAttribute(linePositions, 3));
-      lineGeometry.getAttribute("position").needsUpdate = true;
-
-      // Animate active traveling pulse paths
+      // Gentle continuous rotation of entire cluster
       if (!prefersReducedMotion) {
-        const pulsePosAttrib = pulseGeometry.getAttribute("position") as THREE.BufferAttribute;
-
-        pulses.forEach((pulse, idx) => {
-          pulse.progress += pulse.speed;
-          if (pulse.progress >= 1) {
-            pulse.progress = 0;
-            // Switch to a new path
-            pulse.startNode = pulse.endNode;
-            // Pick a random neighboring node
-            const neighbors: number[] = [];
-            const sx = originalPositions[pulse.startNode * 3];
-            const sy = originalPositions[pulse.startNode * 3 + 1];
-            const sz = originalPositions[pulse.startNode * 3 + 2];
-
-            for (let k = 0; k < particleCount; k++) {
-              if (k === pulse.startNode) continue;
-              const kx = originalPositions[k * 3];
-              const ky = originalPositions[k * 3 + 1];
-              const kz = originalPositions[k * 3 + 2];
-              const dist = Math.sqrt((sx - kx) ** 2 + (sy - ky) ** 2 + (sz - kz) ** 2);
-              if (dist < 6) neighbors.push(k);
-            }
-            if (neighbors.length > 0) {
-              pulse.endNode = neighbors[Math.floor(Math.random() * neighbors.length)];
-            } else {
-              pulse.endNode = Math.floor(Math.random() * particleCount);
-            }
-          }
-
-          // Interpolate coordinate between start & end drifting nodes
-          const sIdx = pulse.startNode * 3;
-          const eIdx = pulse.endNode * 3;
-
-          const sx = positionsArray[sIdx];
-          const sy = positionsArray[sIdx + 1];
-          const sz = positionsArray[sIdx + 2];
-
-          const ex = positionsArray[eIdx];
-          const ey = positionsArray[eIdx + 1];
-          const ez = positionsArray[eIdx + 2];
-
-          const px = sx + (ex - sx) * pulse.progress;
-          const py = sy + (ey - sy) * pulse.progress;
-          const pz = sz + (ez - sz) * pulse.progress;
-
-          pulsePosAttrib.setXYZ(idx, px, py, pz);
-        });
-
-        pulsePosAttrib.needsUpdate = true;
+        particlesMesh.rotation.y = elapsedTime * 0.025;
+        linesMesh.rotation.y = elapsedTime * 0.025;
+        pulsesMesh.rotation.y = elapsedTime * 0.025;
       }
 
-      // Parallax camera rotation
-      if (!prefersReducedMotion) {
-        particlesMesh.rotation.y = time * 0.08;
-        linesMesh.rotation.y = time * 0.08;
-
-        camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.035;
-        camera.position.y += (-mouseY * 1.5 - camera.position.y) * 0.035;
-      }
-
+      // Camera parallax tilt
+      camera.position.x += (currentMouseX * 1.5 - camera.position.x) * 0.05;
+      camera.position.y += (-currentMouseY * 1.5 - camera.position.y) * 0.05;
       camera.lookAt(scene.position);
+
       renderer.render(scene, camera);
     };
 
-    animate();
+    if (prefersReducedMotion) {
+      // Render static frame for reduced motion users
+      particlesMaterial.opacity = 0.85;
+      lineMaterial.opacity = 0.16;
+      renderer.render(scene, camera);
+    } else {
+      animate();
+    }
 
-    // Cleanup resources correctly on component unmount
+    // Cleanup Resources
     return () => {
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
+
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
-      geometry.dispose();
-      material.dispose();
+
+      particlesGeometry.dispose();
+      particlesMaterial.dispose();
       lineGeometry.dispose();
       lineMaterial.dispose();
       pulseGeometry.dispose();
@@ -405,5 +340,11 @@ export const Hero3DCanvas: React.FC = () => {
     };
   }, []);
 
-  return <div ref={mountRef} className="absolute inset-0 pointer-events-none z-0" />;
+  return (
+    <div
+      ref={mountRef}
+      className="absolute inset-0 pointer-events-none z-0"
+      aria-hidden="true"
+    />
+  );
 };
