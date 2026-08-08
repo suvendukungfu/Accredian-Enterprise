@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { METRICS_DATA } from "@/constants/metricsData";
 import { Container } from "@/components/ui/Container";
@@ -50,6 +50,64 @@ const fadeUp = {
   }),
 };
 
+interface MetricCardProps {
+  metric: typeof METRICS_DATA[0];
+  index: number;
+  isVisible: boolean;
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({ metric, index, isVisible }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+    };
+
+    card.addEventListener("mousemove", handleMouseMove);
+    return () => card.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
+      className="relative bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200 overflow-hidden"
+    >
+      {/* Cursor spotlight highlight */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
+        style={{
+          background:
+            "radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.04), transparent 70%)",
+        }}
+      />
+
+      <div className="flex flex-col gap-2">
+        <div className="text-[40px] sm:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] flex items-baseline leading-none">
+          {metric.prefix}
+          <Counter end={metric.value} isVisible={isVisible} />
+          {metric.suffix}
+        </div>
+        <h3 className="text-[16px] font-bold text-[#0F172A]">{metric.label}</h3>
+        <p className="text-[13px] text-[#64748B] leading-[1.6]">{metric.description}</p>
+      </div>
+    </motion.div>
+  );
+};
+
 export const SuccessMetrics: React.FC = () => {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
 
@@ -85,30 +143,7 @@ export const SuccessMetrics: React.FC = () => {
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {METRICS_DATA.map((metric, idx) => (
-            <motion.div
-              key={metric.id}
-              custom={idx}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="bg-white border border-[#E5E7EB] rounded-3xl p-7 sm:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300 group hover:border-blue-200"
-            >
-              <div className="flex flex-col gap-2">
-                <div className="text-[40px] sm:text-[48px] font-extrabold text-[#0F172A] tracking-[-0.03em] flex items-baseline leading-none">
-                  {metric.prefix}
-                  <Counter end={metric.value} isVisible={isVisible} />
-                  <span className="text-blue-600 ml-0.5">{metric.suffix}</span>
-                </div>
-                <h3 className="text-[16px] font-bold text-[#334155] pt-1 group-hover:text-blue-600 transition-colors">
-                  {metric.label}
-                </h3>
-              </div>
-
-              <p className="text-[13px] text-[#94A3B8] mt-5 leading-[1.6] border-t border-[#F1F5F9] pt-5">
-                {metric.description}
-              </p>
-            </motion.div>
+            <MetricCard key={metric.id} metric={metric} index={idx} isVisible={isVisible} />
           ))}
         </div>
       </Container>
