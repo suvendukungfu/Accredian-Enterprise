@@ -273,7 +273,7 @@ export const ROICalculator: React.FC<ROICalculatorProps> = ({ onOpenEnquireModal
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-gradient-to-r from-blue-900/40 to-indigo-900/40 border border-blue-800/50">
+                  <div className="p-4 rounded-xl bg-linear-to-r from-blue-900/40 to-indigo-900/40 border border-blue-800/50">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="text-[12px] font-semibold text-slate-300">
