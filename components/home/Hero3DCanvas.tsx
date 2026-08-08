@@ -193,7 +193,7 @@ export const Hero3DCanvas: React.FC = () => {
     let animationFrameId: number;
     let assemblyProgress = 0;
     let isVisible = true;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     // IntersectionObserver to pause rendering when offscreen
     const observer = new IntersectionObserver(
@@ -211,7 +211,7 @@ export const Hero3DCanvas: React.FC = () => {
 
       if (!isVisible) return;
 
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) * 0.001;
 
       // Smooth assembly entrance interpolation (0 -> 1)
       if (assemblyProgress < 1) {
